@@ -12,7 +12,7 @@ import com.tuan88291.mvppatternkotlin.R
 import com.tuan88291.mvppatternkotlin.data.local.model.DataUser
 import com.tuan88291.mvppatternkotlin.databinding.HomeFragmentBinding
 
-class HomeFragment : BaseFragment(), HomeContract {
+class HomeFragment : BaseFragment() {
     private var homeViewModel: HomeViewModel? = null
     private var binding: HomeFragmentBinding? = null
 
@@ -24,26 +24,23 @@ class HomeFragment : BaseFragment(), HomeContract {
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
         homeViewModel = createViewModel()
         homeViewModel?.getData()?.observe(this, Observer<DataUser> { this.processData(it) })
+        homeViewModel?.loading()?.observe(this, Observer<Boolean> { this.loading(it) })
         binding?.button?.setOnClickListener{
             homeViewModel?.loadData()
         }
     }
     private fun processData(data: DataUser) {
-        binding?.user = data.data?.get(0)
+        val rnds = (0..5).random()
+        binding?.user = data.data?.get(rnds)
     }
     private fun createViewModel(): HomeViewModel {
-        return ViewModelProviders.of(this, HomeFactory(this)).get(HomeViewModel::class.java)
+        return ViewModelProviders.of(this).get(HomeViewModel::class.java)
     }
-    override fun onLoading() {
-        binding?.title?.text = "loading"
-    }
-
-    override fun onLoadComplete() {
-        binding?.title?.text = "loading success"
-
-    }
-
-    override fun onError(mess: String) {
-
+    private fun loading(isLoading: Boolean) {
+       if (isLoading) {
+           binding?.title?.text = "loading"
+       } else {
+           binding?.title?.text = "loading success"
+       }
     }
 }

@@ -8,7 +8,7 @@ import retrofit2.Response
 
 import java.io.IOException
 
-abstract class BaseRetrofit<T>(callback: Call<T>, internal var view: BaseView) {
+abstract class BaseRetrofit<T>(callback: Call<T>) {
 
     init {
         getRetrofit(callback)
@@ -29,7 +29,6 @@ abstract class BaseRetrofit<T>(callback: Call<T>, internal var view: BaseView) {
 
                     } else {
                         onFail(getMessage(response))
-                        view.setErrorParent(getMessage(response))
                         LogUtils.a("response not successful: $response")
 
                     }

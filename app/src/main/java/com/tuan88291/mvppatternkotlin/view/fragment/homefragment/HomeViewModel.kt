@@ -9,31 +9,35 @@ import com.tuan88291.mvppatternkotlin.data.remote.CallApi
 import com.tuan88291.mvppatternkotlin.data.remote.customcallback.BaseRetrofit
 import retrofit2.Response
 
-class HomeViewModel(val v: HomeContract): ViewModel(), BaseInteractor {
+class HomeViewModel(): ViewModel(), BaseInteractor {
     override val callAPi: CallApi = ApiUtil.createApi()
 
     private val dataServer: MutableLiveData<DataUser> by lazy { MutableLiveData<DataUser>() }
+    private val isLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
     fun getData(): MutableLiveData<DataUser>{
         return this.dataServer
     }
+    fun loading(): MutableLiveData<Boolean>{
+        return this.isLoading
+    }
     fun loadData(){
-        object : BaseRetrofit<DataUser>(callAPi.getList("1"), v) {
+        object : BaseRetrofit<DataUser>(callAPi.getList("1")) {
             override fun onGetApiComplete(response: Response<DataUser>) {
                 dataServer.postValue(response.body())
             }
 
             override fun onFail(err: String) {
-                v.onError(err)
+
             }
 
             override fun onLoading() {
                 super.onLoading()
-                v.onLoading()
+                isLoading.postValue(true)
             }
 
             override fun onLoadComplete() {
                 super.onLoadComplete()
-                v.onLoadComplete()
+                isLoading.postValue(false)
             }
         }
     }
