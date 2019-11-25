@@ -1,1 +1,1 @@
-# MvpPatternKotlin
+# MVVM with databinding
