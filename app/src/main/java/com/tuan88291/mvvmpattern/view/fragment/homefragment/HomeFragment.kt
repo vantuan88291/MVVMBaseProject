@@ -15,26 +15,31 @@ import com.tuan88291.mvvmpattern.databinding.HomeFragmentBinding
 class HomeFragment : BaseFragment() {
     private var homeViewModel: HomeViewModel? = null
     private var binding: HomeFragmentBinding? = null
-
+    private var page: Int = 1
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+    }
     override fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
         return binding!!.getRoot()
     }
 
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
-        homeViewModel = createViewModel()
         homeViewModel?.getData()?.observe(this, Observer<DataUser> { this.processData(it) })
         homeViewModel?.loading()?.observe(this, Observer<Boolean> { this.loading(it) })
+        homeViewModel?.error()?.observe(this, Observer<String> { this.error(it) })
         binding?.button?.setOnClickListener{
-            homeViewModel?.loadData()
+            homeViewModel?.loadData(page)
+            page++
         }
     }
     private fun processData(data: DataUser) {
-        val rnds = (0..5).random()
-        binding?.user = data.data?.get(rnds)
-    }
-    private fun createViewModel(): HomeViewModel {
-        return ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        try {
+            binding?.user = data.data?.get(0)
+        }catch (e: Exception) {
+            binding?.content?.text = "End of page"
+        }
     }
     private fun loading(isLoading: Boolean) {
        if (isLoading) {
@@ -42,5 +47,8 @@ class HomeFragment : BaseFragment() {
        } else {
            binding?.title?.text = "loading success"
        }
+    }
+    private fun error(msg: String) {
+        binding?.content?.text = msg
     }
 }

@@ -14,20 +14,24 @@ class HomeViewModel(): ViewModel(), BaseInteractor {
 
     private val dataServer: MutableLiveData<DataUser> by lazy { MutableLiveData<DataUser>() }
     private val isLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
+    private val error: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     fun getData(): MutableLiveData<DataUser>{
         return this.dataServer
     }
     fun loading(): MutableLiveData<Boolean>{
         return this.isLoading
     }
-    fun loadData(){
-        object : BaseRetrofit<DataUser>(callAPi.getList("1")) {
+    fun error(): MutableLiveData<String>{
+        return this.error
+    }
+    fun loadData(page: Int){
+        object : BaseRetrofit<DataUser>(callAPi.getList(page)) {
             override fun onGetApiComplete(response: Response<DataUser>) {
                 dataServer.postValue(response.body())
             }
 
             override fun onFail(err: String) {
-
+                error.postValue(err)
             }
 
             override fun onLoading() {
