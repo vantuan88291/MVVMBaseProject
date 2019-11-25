@@ -8,7 +8,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.tuan88291.mvppatternkotlin"
+        applicationId "com.tuan88291.mvvmpattern"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 1

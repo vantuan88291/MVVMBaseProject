@@ -4,7 +4,7 @@
     <data>
         <variable
             name="user"
-            type="com.tuan88291.mvppatternkotlin.data.local.model.DetailUser" />
+            type="com.tuan88291.mvvmpattern.data.local.model.DetailUser" />
     </data>
 
     <LinearLayout
