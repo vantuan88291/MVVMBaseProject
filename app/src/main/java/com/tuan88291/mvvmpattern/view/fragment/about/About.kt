@@ -26,7 +26,6 @@ class About : BaseFragment() {
     }
 
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
-
         binding!!.title.setText(mContext()!!.getItem())
 
         object : ObserveEasy(){

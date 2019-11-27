@@ -9,14 +9,14 @@ class DetailUser {
     var id: Int? = null
     @SerializedName("email")
     @Expose
-    lateinit var email: String
+    var email: String? = null
     @SerializedName("first_name")
     @Expose
-    lateinit var firstName: String
+    var firstName: String? = null
     @SerializedName("last_name")
     @Expose
-    lateinit var lastName: String
+    var lastName: String? = null
     @SerializedName("avatar")
     @Expose
-    lateinit var avatar: String
+    var avatar: String? = null
 }
