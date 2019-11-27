@@ -33,6 +33,9 @@ class HomeFragment : BaseFragment() {
             homeViewModel?.loadData(page)
             page++
         }
+        binding?.btn?.setOnClickListener {
+            homeViewModel?.dispose()
+        }
     }
     private fun processData(data: DataUser) {
         try {

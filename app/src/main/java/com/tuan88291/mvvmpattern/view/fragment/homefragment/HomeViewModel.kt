@@ -8,6 +8,7 @@ import com.tuan88291.mvvmpattern.data.remote.BaseInteractor
 import com.tuan88291.mvvmpattern.data.remote.CallApi
 import com.tuan88291.mvvmpattern.data.remote.customcallback.BaseRetrofit
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
+import retrofit2.Response
 
 class HomeViewModel: ViewModel(), BaseInteractor {
     override val callAPi: CallApi = ApiUtil.createApi()
@@ -15,6 +16,7 @@ class HomeViewModel: ViewModel(), BaseInteractor {
     private val dataServer: MutableLiveData<DataUser> by lazy { MutableLiveData<DataUser>() }
     private val isLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
     private val error: MutableLiveData<String> by lazy { MutableLiveData<String>() }
+    private val autodis = AutoDisposable(null)
     fun getData(): MutableLiveData<DataUser>{
         return this.dataServer
     }
@@ -25,7 +27,6 @@ class HomeViewModel: ViewModel(), BaseInteractor {
         return this.error
     }
     fun loadData(page: Int){
-        isLoading.postValue(true)
         object : BaseRetrofit<DataUser>(callAPi.getList(page)) {
             override fun onFail(err: String) {
                 error.postValue(err)
@@ -42,12 +43,15 @@ class HomeViewModel: ViewModel(), BaseInteractor {
             }
 
             override fun getDispose(): AutoDisposable? {
-                return null
+                return autodis
             }
 
             override fun onGetApiComplete(t: DataUser) {
                 dataServer.postValue(t)
             }
         }
+    }
+    fun dispose() {
+        autodis.onDismiss()
     }
 }

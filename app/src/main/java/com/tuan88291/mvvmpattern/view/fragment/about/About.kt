@@ -13,11 +13,11 @@ import com.tuan88291.mvvmpattern.utils.observe.ObserveEasy
 
 class About : BaseFragment() {
     private var binding: AboutFragmentBinding? = null
-    private val autodis = AutoDisposable()
+    private var autodis: AutoDisposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        autodis.bindTo(this.lifecycle)
+        autodis = AutoDisposable(this.lifecycle)
 
     }
     override fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

@@ -1,6 +1,7 @@
 package com.tuan88291.mvvmpattern.data.remote.customcallback
 
 import com.blankj.utilcode.util.LogUtils
+import com.google.gson.Gson
 import com.jakewharton.retrofit2.adapter.rxjava2.HttpException
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import com.tuan88291.mvvmpattern.utils.observe.addTo
@@ -10,28 +11,29 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import okhttp3.ResponseBody
 import org.json.JSONObject
+import retrofit2.Response
 import java.io.IOException
 import java.net.SocketTimeoutException
 
-abstract class BaseRetrofit<T>(callback: Observable<T>) {
+abstract class BaseRetrofit<T>(callback: Observable<Response<T>>) {
 
     init {
         getRetrofit(callback)
     }
 
-    private fun getRetrofit(callback: Observable<T>) {
+    private fun getRetrofit(callback: Observable<Response<T>>) {
         onLoading()
         if (callback != null) {
             val dis = callback.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(object : DisposableObserver<T>() {
+                .subscribeWith(object : DisposableObserver<Response<T>>() {
                     override fun onComplete() {
                         onLoadComplete()
                     }
-
-                    override fun onNext(t: T) {
+                    override fun onNext(t: Response<T>) {
                         try {
-                            onGetApiComplete(t)
+                            LogUtils.a("Response----->", t.raw().toString() + "\n" + Gson().toJson(t.body()))
+                            onGetApiComplete(t.body()!!)
                         } catch (e: Exception) {
                             if (e.localizedMessage == null) {
                                 onFail("Have some trouble, please try again")
@@ -91,9 +93,7 @@ abstract class BaseRetrofit<T>(callback: Observable<T>) {
         } catch (e: Exception) {
             mess = "Have some trouble, please try again!"
             LogUtils.a("Can not get message!", response.toString())
-
         }
-
         return mess
     }
     protected abstract fun getDispose(): AutoDisposable?

@@ -7,16 +7,16 @@ import com.blankj.utilcode.util.LogUtils
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-class AutoDisposable : LifecycleObserver {
-    lateinit var compositeDisposable: CompositeDisposable
-    fun bindTo(lifecycle: Lifecycle) {
-        lifecycle.addObserver(this)
+class AutoDisposable(lifecycle: Lifecycle?) : LifecycleObserver {
+    var compositeDisposable: CompositeDisposable? = null
+    init {
+        lifecycle?.addObserver(this)
         compositeDisposable = CompositeDisposable()
     }
 
     fun add(disposable: Disposable) {
-        if (::compositeDisposable.isInitialized) {
-            compositeDisposable.add(disposable)
+        if (compositeDisposable != null) {
+            compositeDisposable?.add(disposable)
         } else {
             throw NotImplementedError("must bind AutoDisposable to a Lifecycle first")
         }
@@ -24,8 +24,12 @@ class AutoDisposable : LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
-        compositeDisposable.dispose()
-        LogUtils.a("disssssssssss")
+        compositeDisposable?.dispose()
+        LogUtils.a("Destroy this task success----->")
+    }
+    fun onDismiss() {
+        compositeDisposable?.dispose()
+        LogUtils.a("Cancel this task success----->")
     }
 }
 
