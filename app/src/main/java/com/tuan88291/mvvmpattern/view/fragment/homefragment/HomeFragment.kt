@@ -11,30 +11,27 @@ import com.tuan88291.mvvmpattern.BaseFragment
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.databinding.HomeFragmentBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment() {
-    private var homeViewModel: HomeViewModel? = null
+    private val homeViewModel: HomeViewModel by viewModel()
     private var binding: HomeFragmentBinding? = null
     private var page: Int = 1
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-    }
     override fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
         return binding!!.getRoot()
     }
 
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
-        homeViewModel?.getData()?.observe(this, Observer<DataUser> { this.processData(it) })
-        homeViewModel?.loading()?.observe(this, Observer<Boolean> { this.loading(it) })
-        homeViewModel?.error()?.observe(this, Observer<String> { this.error(it) })
+        homeViewModel.getData().observe(this, Observer<DataUser> { this.processData(it) })
+        homeViewModel.loading().observe(this, Observer<Boolean> { this.loading(it) })
+        homeViewModel.error().observe(this, Observer<String> { this.error(it) })
         binding?.button?.setOnClickListener{
-            homeViewModel?.loadData(page)
+            homeViewModel.loadData(page)
             page++
         }
         binding?.btn?.setOnClickListener {
-            homeViewModel?.dispose()
+            homeViewModel.dispose()
         }
     }
     private fun processData(data: DataUser) {
