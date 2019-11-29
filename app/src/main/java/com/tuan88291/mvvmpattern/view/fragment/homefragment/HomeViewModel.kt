@@ -8,7 +8,6 @@ import com.tuan88291.mvvmpattern.data.remote.BaseInteractor
 import com.tuan88291.mvvmpattern.data.remote.CallApi
 import com.tuan88291.mvvmpattern.data.remote.customcallback.BaseRetrofit
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
-import retrofit2.Response
 
 class HomeViewModel: ViewModel(), BaseInteractor {
     override val callAPi: CallApi = ApiUtil.createApi()

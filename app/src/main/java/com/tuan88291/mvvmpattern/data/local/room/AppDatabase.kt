@@ -9,21 +9,5 @@ import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
 @Database(entities = [DataRoom::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun queries(): QueriesDao
-
-    companion object {
-
-        @Volatile private var INSTANCE: AppDatabase? = null
-        fun getAppDatabase(context: Context): AppDatabase =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
-            }
-        private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext,
-                AppDatabase::class.java, "user-database")
-                .build()
-        fun destroyInstance() {
-            INSTANCE = null
-        }
-    }
+    abstract fun queries() : QueriesDao
 }
