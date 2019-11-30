@@ -2,6 +2,7 @@ package com.tuan88291.mvvmpattern.data.remote
 
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import com.tuan88291.mvvmpattern.BuildConfig
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -9,9 +10,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 import com.tuan88291.mvvmpattern.utils.Common.DOMAIN
+import okhttp3.logging.HttpLoggingInterceptor
 
 
 object ServiceGenerator {
+    private val logging = HttpLoggingInterceptor()
     private val httpClient: OkHttpClient.Builder by lazy { OkHttpClient.Builder() }
     private val builder = Retrofit.Builder()
         .baseUrl(DOMAIN)
@@ -27,9 +30,13 @@ object ServiceGenerator {
                 val requestBuilder = chain.request().newBuilder()
                     .addHeader("Content-Type", "application/json; charset=utf-8")
                     .addHeader("Accept", "application/json")
-                    .method(chain.request().method(), chain.request().body())
+                    .method(chain.request().method, chain.request().body)
                 val request = requestBuilder.build()
                 chain.proceed(request)
+            }
+            if (BuildConfig.DEBUG) {
+                logging.level = HttpLoggingInterceptor.Level.BODY
+                addInterceptor(logging)
             }
         }
 
@@ -49,8 +56,12 @@ object ServiceGenerator {
                 val requestBuilder = chain.request().newBuilder()
                     .addHeader("Content-Type", "application/json")
                     .addHeader("Accept", "application/json")
-                    .method(chain.request().method(), chain.request().body()).build()
+                    .method(chain.request().method, chain.request().body).build()
                 chain.proceed(requestBuilder)
+            }
+            if (BuildConfig.DEBUG) {
+                logging.level = HttpLoggingInterceptor.Level.BODY
+                addInterceptor(logging)
             }
         }
         val client = httpClient.build()

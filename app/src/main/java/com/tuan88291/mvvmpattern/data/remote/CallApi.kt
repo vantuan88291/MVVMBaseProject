@@ -10,5 +10,5 @@ import retrofit2.http.Query
 @JvmSuppressWildcards
 interface CallApi {
     @GET("users")
-    fun getList(@Query("page") page: Int): Observable<Response<DataUser>>
+    fun getList(@Query("page") page: Int): Observable<DataUser>
 }

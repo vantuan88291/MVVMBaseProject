@@ -29,6 +29,7 @@ ext.deps = [
                 retrofit2: "com.squareup.retrofit2:retrofit:$arch.retrofit",
                 rx_retrofit: "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0",
                 converter: "com.squareup.retrofit2:converter-gson:$arch.retrofit",
+                logging: "com.squareup.okhttp3:logging-interceptor:4.2.1",
 
         ],
         perfomance: [

@@ -15,25 +15,24 @@ import retrofit2.Response
 import java.io.IOException
 import java.net.SocketTimeoutException
 
-abstract class BaseRetrofit<T>(callback: Observable<Response<T>>) {
+abstract class BaseRetrofit<T>(callback: Observable<T>) {
 
     init {
         getRetrofit(callback)
     }
 
-    private fun getRetrofit(callback: Observable<Response<T>>) {
+    private fun getRetrofit(callback: Observable<T>) {
         onLoading()
         if (callback != null) {
             val dis = callback.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(object : DisposableObserver<Response<T>>() {
+                .subscribeWith(object : DisposableObserver<T>() {
                     override fun onComplete() {
                         onLoadComplete()
                     }
-                    override fun onNext(t: Response<T>) {
+                    override fun onNext(t: T) {
                         try {
-                            LogUtils.a("Response----->", t.raw().toString() + "\n" + Gson().toJson(t.body()))
-                            onGetApiComplete(t.body()!!)
+                            onGetApiComplete(t)
                         } catch (e: Exception) {
                             if (e.localizedMessage == null) {
                                 onFail("Have some trouble, please try again")

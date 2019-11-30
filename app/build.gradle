@@ -7,6 +7,9 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: rootProject.file("dependencies.gradle")
 android {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     compileSdkVersion versions.compile_sdk
     defaultConfig {
         applicationId versions.package
@@ -61,4 +64,5 @@ dependencies {
     implementation deps.di.koin
     implementation deps.di.koin_androix
     implementation deps.di.koin_viewmodel
+    implementation deps.resful.logging
 }

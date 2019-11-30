@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
+import io.reactivex.Completable
 
 @Dao
 interface QueriesDao {
@@ -13,5 +14,5 @@ interface QueriesDao {
     fun getAll(): LiveData<List<DataRoom>>
 
     @Insert
-    fun insertData(item: DataRoom)
+    fun insertData(item: DataRoom) : Completable
 }

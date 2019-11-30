@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel
 import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
 import com.tuan88291.mvvmpattern.data.local.room.QueriesDao
 
-class DBmodel(val mRepository: DBRepository) : ViewModel(), QueriesDao {
-    override fun getAll(): LiveData<List<DataRoom>> {
+class DBmodel(val mRepository: iDBRepository) : ViewModel() {
+    fun getAll(): LiveData<List<DataRoom>> {
         return mRepository.getAll()
     }
 
-    override fun insertData(item: DataRoom) {
+    fun insertData(item: DataRoom) {
             mRepository.insertData(item)
     }
 }
