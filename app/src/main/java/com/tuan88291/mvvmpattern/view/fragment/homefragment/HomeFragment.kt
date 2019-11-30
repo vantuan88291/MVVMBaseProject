@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.tuan88291.mvvmpattern.BaseFragment
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
 import com.tuan88291.mvvmpattern.data.local.model.DataUser
+import com.tuan88291.mvvmpattern.data.local.model.DetailUser
 import com.tuan88291.mvvmpattern.data.local.room.livedata.DBmodel
 import com.tuan88291.mvvmpattern.databinding.HomeFragmentBinding
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment() {
@@ -22,7 +21,6 @@ class HomeFragment : BaseFragment() {
     private var binding: HomeFragmentBinding? = null
     private val db: DBmodel by viewModel()
 
-    private var page: Int = 1
     override fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
         return binding!!.getRoot()
@@ -32,34 +30,31 @@ class HomeFragment : BaseFragment() {
         homeViewModel.getData().observe(this, Observer<DataUser> { this.processData(it) })
         homeViewModel.loading().observe(this, Observer<Boolean> { this.loading(it) })
         homeViewModel.error().observe(this, Observer<String> { this.error(it) })
-        db.getAll().observe(this, Observer<List<DataRoom>> { this.onDataChange(it) })
+        db.getAll().observe(this, Observer<MutableList<DataRoom>> { this.onDataChange(it) })
         binding?.button?.setOnClickListener{
-            homeViewModel.loadData(page)
-            page++
+            homeViewModel.loadData()
         }
         binding?.btn?.setOnClickListener {
-            db.insertData(DataRoom("tuan", 15))
+            db.insertData(DataRoom("tuan", (0..10).random()))
         }
     }
-    private fun onDataChange(data: List<DataRoom>) {
-        binding?.content?.text = "End of page ${data.size}"
+    private fun onDataChange(data: MutableList<DataRoom>) {
+        binding?.list?.visibility = View.GONE
+        binding?.listDb?.visibility = View.VISIBLE
+        binding?.listDb?.setData(data)
     }
     private fun processData(data: DataUser) {
+        binding?.list?.visibility = View.VISIBLE
+        binding?.listDb?.visibility = View.GONE
         try {
-            binding?.user = data.data?.get(0)
+            binding?.list?.setData(data.data!!)
         }catch (e: Exception) {
-            binding?.content?.text = "End of page"
         }
     }
     private fun loading(isLoading: Boolean) {
-       if (isLoading) {
-           binding?.title?.text = "loading"
-       } else {
-           binding?.title?.text = "loading success"
-       }
+        binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
     private fun error(msg: String) {
-        binding?.content?.text = msg
     }
     fun toast(msg: String) {
         Toast.makeText(mContext(), msg, Toast.LENGTH_LONG).show()

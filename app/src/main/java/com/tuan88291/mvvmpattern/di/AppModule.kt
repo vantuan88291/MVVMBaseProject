@@ -5,6 +5,9 @@ import com.tuan88291.mvvmpattern.data.local.room.AppDatabase
 import com.tuan88291.mvvmpattern.data.local.room.livedata.DBRepository
 import com.tuan88291.mvvmpattern.data.local.room.livedata.DBmodel
 import com.tuan88291.mvvmpattern.data.local.room.livedata.iDBRepository
+import com.tuan88291.mvvmpattern.data.remote.ApiGenerator
+import com.tuan88291.mvvmpattern.data.remote.service.ServiceApi
+import com.tuan88291.mvvmpattern.data.remote.service.iServiceApi
 import com.tuan88291.mvvmpattern.view.fragment.homefragment.HomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -16,5 +19,9 @@ val dbModule = module {
     viewModel { DBmodel(get()) }
 }
 val mvvmModule = module {
-    viewModel { HomeViewModel() }
+    viewModel { HomeViewModel(get()) }
+}
+val RetrofitModule = module {
+    single<iServiceApi> { ServiceApi() }
+    single { ApiGenerator(get()) }
 }

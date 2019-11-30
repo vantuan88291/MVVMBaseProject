@@ -3,14 +3,14 @@ package com.tuan88291.mvvmpattern.view.fragment.homefragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tuan88291.mvvmpattern.data.local.model.DataUser
-import com.tuan88291.mvvmpattern.data.remote.ApiUtil
+import com.tuan88291.mvvmpattern.data.remote.ApiGenerator
 import com.tuan88291.mvvmpattern.data.remote.BaseInteractor
 import com.tuan88291.mvvmpattern.data.remote.CallApi
 import com.tuan88291.mvvmpattern.data.remote.customcallback.BaseRetrofit
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 
-class HomeViewModel: ViewModel(), BaseInteractor {
-    override val callAPi: CallApi = ApiUtil.createApi()
+class HomeViewModel(api: ApiGenerator): ViewModel(), BaseInteractor {
+    override val callAPi: CallApi = api.createApi()
 
     private val dataServer: MutableLiveData<DataUser> by lazy { MutableLiveData<DataUser>() }
     private val isLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
@@ -25,8 +25,8 @@ class HomeViewModel: ViewModel(), BaseInteractor {
     fun error(): MutableLiveData<String>{
         return this.error
     }
-    fun loadData(page: Int){
-        object : BaseRetrofit<DataUser>(callAPi.getList(page)) {
+    fun loadData(){
+        object : BaseRetrofit<DataUser>(callAPi.getList(1)) {
             override fun onFail(err: String) {
                 error.postValue(err)
             }

@@ -1,28 +1,25 @@
-package com.tuan88291.mvvmpattern.data.remote
+package com.tuan88291.mvvmpattern.data.remote.service
 
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import com.tuan88291.mvvmpattern.BuildConfig
+import com.tuan88291.mvvmpattern.utils.Common
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
 import java.util.concurrent.TimeUnit
 
-import com.tuan88291.mvvmpattern.utils.Common.DOMAIN
-import okhttp3.logging.HttpLoggingInterceptor
-
-
-object ServiceGenerator {
+class ServiceApi: iServiceApi {
     private val logging = HttpLoggingInterceptor()
     private val httpClient: OkHttpClient.Builder by lazy { OkHttpClient.Builder() }
     private val builder = Retrofit.Builder()
-        .baseUrl(DOMAIN)
+        .baseUrl(Common.DOMAIN)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GsonConverterFactory.create())
 
     // service have not token
-    fun <S> createService(serviceClass: Class<S>): S {
+    override fun <S> createService(serviceClass: Class<S>): S {
         httpClient.apply {
             readTimeout(3, TimeUnit.MINUTES)
             connectTimeout(3, TimeUnit.MINUTES)
@@ -44,11 +41,12 @@ object ServiceGenerator {
             .setLenient()
             .create()
         val client = httpClient.build()
-        val retrofit = builder.client(client).addConverterFactory(GsonConverterFactory.create(gson)).build()
+        val retrofit = builder.client(client).addConverterFactory(
+            GsonConverterFactory.create(gson)).build()
         return retrofit.create(serviceClass)
     }
 
-    fun <S> createServiceToken(serviceClass: Class<S>): S {
+    override fun <S> createServiceToken(serviceClass: Class<S>): S {
         httpClient.apply {
             readTimeout(3, TimeUnit.MINUTES)
             connectTimeout(3, TimeUnit.MINUTES)

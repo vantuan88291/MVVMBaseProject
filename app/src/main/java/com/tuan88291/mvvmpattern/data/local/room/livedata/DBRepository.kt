@@ -9,8 +9,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 @SuppressLint("CheckResult")
 class DBRepository internal constructor(val mQueries: QueriesDao): iDBRepository {
-    override fun getAll(): LiveData<List<DataRoom>> {
+    override fun getAll(): LiveData<MutableList<DataRoom>> {
         return mQueries.getAll()
+    }
+
+    override fun getLast(): LiveData<DataRoom> {
+        return mQueries.getLast()
     }
 
     override fun insertData(item: DataRoom) {

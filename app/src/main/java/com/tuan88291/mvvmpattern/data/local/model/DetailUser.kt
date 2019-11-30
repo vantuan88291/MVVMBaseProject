@@ -19,4 +19,12 @@ class DetailUser {
     @SerializedName("avatar")
     @Expose
     var avatar: String? = null
+
+    constructor(id: Int?, email: String?, firstName: String?, lastName: String?, avatar: String?) {
+        this.id = id
+        this.email = email
+        this.firstName = firstName
+        this.lastName = lastName
+        this.avatar = avatar
+    }
 }
