@@ -69,5 +69,5 @@ dependencies {
     implementation deps.di.koin
     implementation deps.di.koin_androix
     implementation deps.di.koin_viewmodel
-    implementation deps.resful.logging
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
 }

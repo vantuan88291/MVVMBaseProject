@@ -27,10 +27,13 @@ class HomeFragment : BaseFragment() {
     }
 
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
+
         homeViewModel.getData().observe(this, Observer<DataUser> { this.processData(it) })
         homeViewModel.loading().observe(this, Observer<Boolean> { this.loading(it) })
         homeViewModel.error().observe(this, Observer<String> { this.error(it) })
+
         db.getAll().observe(this, Observer<MutableList<DataRoom>> { this.onDataChange(it) })
+
         binding?.button?.setOnClickListener{
             homeViewModel.loadData()
         }
