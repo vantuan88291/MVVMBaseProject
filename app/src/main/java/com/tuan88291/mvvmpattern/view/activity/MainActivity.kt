@@ -1,7 +1,6 @@
 package com.tuan88291.mvvmpattern.view.activity
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -13,7 +12,7 @@ import com.tuan88291.mvvmpattern.BaseActivity
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.model.Data
 import com.tuan88291.mvvmpattern.databinding.ActivityMainBinding
-import com.tuan88291.mvvmpattern.view.fragment.about.About
+import com.tuan88291.mvvmpattern.view.fragment.chat.ChatFragment
 import com.tuan88291.mvvmpattern.view.fragment.homefragment.HomeFragment
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -25,11 +24,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding?.appBar?.toolbar)
         item = ViewModelProviders.of(this).get(Data::class.java)
-
-        binding?.appBar?.fab?.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
 
         val toggle = ActionBarDrawerToggle(
             this, binding?.drawerLayout, binding?.appBar?.toolbar,
@@ -81,7 +75,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 addFragment(HomeFragment())
             }
             R.id.nav_gallery -> {
-                addFragment(About())
+                addFragment(ChatFragment())
 
             }
             R.id.nav_slideshow -> {
