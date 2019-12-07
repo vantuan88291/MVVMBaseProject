@@ -58,6 +58,7 @@ dependencies {
     implementation deps.resful.rx_retrofit
     implementation deps.resful.retrofit2
     implementation deps.resful.logd
+    implementation deps.resful.logging
     implementation deps.db.runtime
     kapt deps.db.compiler
     androidTestImplementation deps.db.test
@@ -69,5 +70,7 @@ dependencies {
     implementation deps.di.koin
     implementation deps.di.koin_androix
     implementation deps.di.koin_viewmodel
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
+    implementation (deps.resful.socket){
+        exclude group: 'org.json', module: 'json'
+    }
 }

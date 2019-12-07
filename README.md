@@ -31,3 +31,6 @@ packagename
 
 
 All lib in ```dependencies.gradle```
+
+
+To use socket demo, clone project and setup node server: https://github.com/vantuan88291/SocketServer
