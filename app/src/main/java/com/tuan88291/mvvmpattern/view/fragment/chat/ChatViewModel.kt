@@ -66,22 +66,10 @@ class ChatViewModel: ViewModel(), LifecycleObserver {
     private val onTyping = object : Emitter.Listener {
 
         override fun call(vararg args: Any?) {
-            val datas = args[0] as JSONArray
+            val datas = args[0].toString()
             var listUser = ""
-            if (datas.length() > 0) {
-                if (datas.length() == 1) {
-                    if (datas[0].toString() != Build.MODEL) {
-                        listUser = datas[0].toString()
-                    } else {
-                        listUser = ""
-                    }
-                } else {
-                    for (i in 0..datas.length() - 1) {
-                        if (datas[i] != Build.MODEL) {
-                            listUser = listUser + datas[i] + ","
-                        }
-                    }
-                }
+            if (datas != Build.MODEL) {
+                listUser = "$datas is typing..."
             }
             listTyping.postValue(listUser)
         }
