@@ -23,10 +23,15 @@ class ListChatSocket(context: Context, attrs: AttributeSet) : RecyclerView(conte
             layoutManager = mLayoutManager
         }
     }
-    fun setmId(id: Int) {
-        mAdapter?.setId(id)
+    fun setmId(name: String) {
+        mAdapter?.setId(name)
     }
-    fun setData(data: MutableList<DataChat>) {
-        mAdapter?.setData(data)
+    fun setData(item: DataChat) {
+        mAdapter?.setData(item)
+        this.smoothScrollToPosition(mAdapter!!.itemCount - 1)
+    }
+    fun addAllData(data: MutableList<DataChat>) {
+        mAdapter?.addAllData(data)
+        this.smoothScrollToPosition(mAdapter!!.itemCount - 1)
     }
 }

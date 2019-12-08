@@ -2,6 +2,8 @@
 
 Library: DI with koin, RXjava, room, mvvm, Rx retrofit
 
+This app has a small example about chat with socket io using MVVM
+
 ## Explanation of folder structure
 
 ```
