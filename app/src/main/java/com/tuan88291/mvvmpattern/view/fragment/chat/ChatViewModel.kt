@@ -12,19 +12,26 @@ import org.json.JSONObject
 
 class ChatViewModel: ViewModel(), LifecycleObserver {
     private val isLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
+    private val listTyping: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     private val data: MutableLiveData<DataChat> by lazy { MutableLiveData<DataChat>() }
     private val allData: MutableLiveData<MutableList<DataChat>> by lazy { MutableLiveData<MutableList<DataChat>>() }
     private val mSocket: Socket by lazy { IO.socket("http://192.168.31.196:3000") }
-    val mId: Int = (0..1000).random()
+    val mId: Int = (0..10).random()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreateSocket() {
         mSocket.connect()
         mSocket.on("newmsg", onNewMsg)
         mSocket.on("allData", getAllData)
-        isLoading.postValue(true)
+        mSocket.on("isTyping", onTyping)
         mSocket.emit("getAllData")
 
+    }
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun reConnectSocket() {
+        if (!mSocket.connected()) {
+            mSocket.connect()
+        }
     }
     fun sendMsg(msg: String) {
         val jsonObject = JSONObject()
@@ -56,11 +63,40 @@ class ChatViewModel: ViewModel(), LifecycleObserver {
             isLoading.postValue(false)
         }
     }
+    private val onTyping = object : Emitter.Listener {
+
+        override fun call(vararg args: Any?) {
+            val datas = args[0] as JSONArray
+            var listUser = ""
+            if (datas.length() > 0) {
+                if (datas.length() == 1) {
+                    if (datas[0].toString() != Build.MODEL) {
+                        listUser = datas[0].toString()
+                    } else {
+                        listUser = ""
+                    }
+                } else {
+                    for (i in 0..datas.length() - 1) {
+                        if (datas[i] != Build.MODEL) {
+                            listUser = listUser + datas[i] + ","
+                        }
+                    }
+                }
+            }
+            listTyping.postValue(listUser)
+        }
+    }
+    fun emitTyping() {
+        mSocket.emit("typing", Build.MODEL)
+    }
     fun getDataChat(): MutableLiveData<DataChat>{
         return this.data
     }
     fun getLoading(): MutableLiveData<Boolean>{
         return this.isLoading
+    }
+    fun getTyping(): MutableLiveData<String>{
+        return this.listTyping
     }
     fun getAllDataChat(): MutableLiveData<MutableList<DataChat>>{
         return this.allData

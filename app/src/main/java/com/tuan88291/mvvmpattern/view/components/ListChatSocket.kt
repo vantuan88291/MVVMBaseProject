@@ -32,6 +32,13 @@ class ListChatSocket(context: Context, attrs: AttributeSet) : RecyclerView(conte
     }
     fun addAllData(data: MutableList<DataChat>) {
         mAdapter?.addAllData(data)
-        this.smoothScrollToPosition(mAdapter!!.itemCount - 1)
+        this.scrollToEnd()
+    }
+    fun scrollToEnd() {
+        try {
+            this.smoothScrollToPosition(mAdapter!!.itemCount - 1)
+        }catch (e: Exception) {
+
+        }
     }
 }

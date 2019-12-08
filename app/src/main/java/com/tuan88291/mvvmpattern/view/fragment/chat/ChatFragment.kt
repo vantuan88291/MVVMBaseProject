@@ -2,21 +2,32 @@ package com.tuan88291.mvvmpattern.view.fragment.chat
 
 import android.os.Build
 import android.os.Bundle
-import androidx.lifecycle.Observer
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.tuan88291.mvvmpattern.BaseFragment
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.model.DataChat
 import com.tuan88291.mvvmpattern.databinding.AboutFragmentBinding
+import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
+import com.tuan88291.mvvmpattern.utils.observe.addTo
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Function
+import io.reactivex.schedulers.Schedulers
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.concurrent.TimeUnit
 
 
 class ChatFragment : BaseFragment() {
     private var binding: AboutFragmentBinding? = null
     private val chatViewModel: ChatViewModel by viewModel()
+    private var autodis: AutoDisposable? =  null
     override fun setView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -29,10 +40,12 @@ class ChatFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycle.addObserver(chatViewModel)
+        autodis = AutoDisposable(this.lifecycle)
     }
 
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.list?.setmId(Build.MODEL)
+        chatViewModel.getTyping().observe(this, Observer<String> { this.onTyping(it) })
         chatViewModel.getLoading().observe(this, Observer<Boolean> { this.loading(it) })
         chatViewModel.getDataChat().observe(this, Observer<DataChat> { this.processData(it) })
         chatViewModel.getAllDataChat().observe(this, Observer<MutableList<DataChat>> { this.processAllData(it) })
@@ -41,8 +54,32 @@ class ChatFragment : BaseFragment() {
             chatViewModel.sendMsg(binding?.input?.text?.toString()!!)
             binding?.input?.setText("")
         }
+        binding?.input?.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                chatViewModel.emitTyping()
+            }
+
+        })
+        setUpTyping()
     }
 
+    private fun setUpTyping() {
+        Observable.just(true).delay(3000, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                binding?.typing?.visibility = View.GONE
+            }
+            .subscribe().addTo(autodis!!)
+
+    }
     private fun processData(item: DataChat) {
         binding?.list?.setData(item)
     }
@@ -51,6 +88,15 @@ class ChatFragment : BaseFragment() {
     }
     private fun loading(load: Boolean) {
         binding?.loading?.visibility = if (load) View.VISIBLE else View.GONE
+    }
+    private fun onTyping(typings: String) {
+        if (typings !== "") {
+            binding?.apply {
+                typing.text = "$typings is typing..."
+                typing.visibility = View.VISIBLE
+            }
+            setUpTyping()
+        }
     }
     override fun onDestroy() {
         super.onDestroy()
