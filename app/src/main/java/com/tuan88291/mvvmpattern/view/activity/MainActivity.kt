@@ -6,21 +6,31 @@ import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.tuan88291.mvvmpattern.BaseActivity
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.model.Data
 import com.tuan88291.mvvmpattern.databinding.ActivityMainBinding
+import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
+import com.tuan88291.mvvmpattern.utils.observe.addTo
 import com.tuan88291.mvvmpattern.view.fragment.chat.ChatFragment
 import com.tuan88291.mvvmpattern.view.fragment.homefragment.HomeFragment
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var binding: ActivityMainBinding? = null
     private var item: Data? = null
+    private var autodis: AutoDisposable? =  null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        autodis = AutoDisposable(this.lifecycle)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding?.appBar?.toolbar)
         item = ViewModelProviders.of(this).get(Data::class.java)
@@ -34,6 +44,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         toggle.syncState()
 
         binding?.navView?.setNavigationItemSelectedListener(this)
+        binding?.appBar?.title?.text = "Call API"
         addFragment(HomeFragment())
     }
 
@@ -51,6 +62,22 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     fun getItem(): String {
         return item!!.example
+    }
+    fun setTyping(msg: String) {
+        binding?.appBar?.typing?.visibility = View.VISIBLE
+        binding?.appBar?.typing?.text = "$msg is typing..."
+        setUpTyping()
+    }
+
+    fun setUpTyping() {
+        Observable.just(true).delay(3000, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map {
+                binding?.appBar?.typing?.visibility = View.GONE
+            }
+            .subscribe().addTo(autodis!!)
+
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -72,9 +99,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_camera -> {
+                binding?.appBar?.title?.text = "Call API"
                 addFragment(HomeFragment())
             }
             R.id.nav_gallery -> {
+                binding?.appBar?.title?.text = "Chat socket"
                 addFragment(ChatFragment())
 
             }

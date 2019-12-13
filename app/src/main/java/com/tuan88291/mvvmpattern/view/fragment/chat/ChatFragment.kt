@@ -27,7 +27,6 @@ import java.util.concurrent.TimeUnit
 class ChatFragment : BaseFragment() {
     private var binding: AboutFragmentBinding? = null
     private val chatViewModel: ChatViewModel by viewModel()
-    private var autodis: AutoDisposable? =  null
     override fun setView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,7 +39,6 @@ class ChatFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         lifecycle.addObserver(chatViewModel)
-        autodis = AutoDisposable(this.lifecycle)
     }
 
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,19 +65,9 @@ class ChatFragment : BaseFragment() {
             }
 
         })
-        setUpTyping()
+        mContext()?.setUpTyping()
     }
 
-    private fun setUpTyping() {
-        Observable.just(true).delay(3000, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .map {
-                binding?.typing?.visibility = View.GONE
-            }
-            .subscribe().addTo(autodis!!)
-
-    }
     private fun processData(item: DataChat) {
         binding?.list?.setData(item)
     }
@@ -91,11 +79,7 @@ class ChatFragment : BaseFragment() {
     }
     private fun onTyping(typings: String) {
         if (typings !== "") {
-            binding?.apply {
-                typing.text = "$typings is typing..."
-                typing.visibility = View.VISIBLE
-            }
-            setUpTyping()
+            mContext()?.setTyping(typings)
         }
     }
     override fun onDestroy() {
