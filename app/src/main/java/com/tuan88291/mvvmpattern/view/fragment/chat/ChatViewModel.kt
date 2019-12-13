@@ -15,7 +15,8 @@ class ChatViewModel: ViewModel(), LifecycleObserver {
     private val listTyping: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     private val data: MutableLiveData<DataChat> by lazy { MutableLiveData<DataChat>() }
     private val allData: MutableLiveData<MutableList<DataChat>> by lazy { MutableLiveData<MutableList<DataChat>>() }
-    private val mSocket: Socket by lazy { IO.socket("http://192.168.31.196:3000") }
+//    private val mSocket: Socket by lazy { IO.socket("http://192.168.31.196:3000") }
+        private val mSocket: Socket by lazy { IO.socket("http://35.227.150.67:3000") }
     val mId: Int = (0..10).random()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
@@ -69,7 +70,7 @@ class ChatViewModel: ViewModel(), LifecycleObserver {
             val datas = args[0].toString()
             var listUser = ""
             if (datas != Build.MODEL) {
-                listUser = "$datas is typing..."
+                listUser = "$datas"
             }
             listTyping.postValue(listUser)
         }
