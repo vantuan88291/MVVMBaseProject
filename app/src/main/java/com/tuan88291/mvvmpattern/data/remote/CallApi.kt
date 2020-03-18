@@ -11,4 +11,6 @@ import retrofit2.http.Query
 interface CallApi {
     @GET("users")
     fun getList(@Query("page") page: Int): Observable<DataUser>
+    @GET("users")
+    fun getList2(@Query("page") page: Int): Observable<DataUser>
 }

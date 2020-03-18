@@ -28,14 +28,14 @@ class HomeFragment : BaseFragment() {
 
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
 
-        homeViewModel.getData().observe(this, Observer<DataUser> { this.processData(it) })
+        homeViewModel.getData().observe(this, Observer<MutableList<DetailUser>> { this.processData(it) })
         homeViewModel.loading().observe(this, Observer<Boolean> { this.loading(it) })
         homeViewModel.error().observe(this, Observer<String> { this.error(it) })
 
         db.getAll().observe(this, Observer<MutableList<DataRoom>> { this.onDataChange(it) })
 
         binding?.button?.setOnClickListener{
-            homeViewModel.loadData()
+            homeViewModel.loadDataZip()
         }
         binding?.btn?.setOnClickListener {
             db.insertData(DataRoom("tuan", (0..10).random()))
@@ -46,11 +46,11 @@ class HomeFragment : BaseFragment() {
         binding?.listDb?.visibility = View.VISIBLE
         binding?.listDb?.setData(data)
     }
-    private fun processData(data: DataUser) {
+    private fun processData(data: MutableList<DetailUser>) {
         binding?.list?.visibility = View.VISIBLE
         binding?.listDb?.visibility = View.GONE
         try {
-            binding?.list?.setData(data.data!!)
+            binding?.list?.setData(data)
         }catch (e: Exception) {
         }
     }
