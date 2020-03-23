@@ -6,10 +6,11 @@ import com.tuan88291.mvvmpattern.data.remote.ApiGenerator
 import com.tuan88291.mvvmpattern.data.remote.BaseInteractor
 import com.tuan88291.mvvmpattern.data.remote.CallApi
 import com.tuan88291.mvvmpattern.utils.Utils.getMessageExeption
-import kotlinx.coroutines.*
-import com.tuan88291.mvvmpattern.view.BaseViewModel
-import kotlinx.coroutines.CoroutineScope
+import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import com.tuan88291.mvvmpattern.view.BaseViewModel
+import kotlinx.coroutines.*
 
 class HomeViewModel(api: ApiGenerator): BaseViewModel(), BaseInteractor, LifecycleObserver {
     override val callAPi: CallApi = api.createApi()
