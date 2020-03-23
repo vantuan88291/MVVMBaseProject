@@ -28,29 +28,38 @@ class HomeFragment : BaseFragment() {
 
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
 
-        homeViewModel.getData().observe(this, Observer<MutableList<DetailUser>> { this.processData(it) })
-        homeViewModel.loading().observe(this, Observer<Boolean> { this.loading(it) })
-        homeViewModel.error().observe(this, Observer<String> { this.error(it) })
-
-        db.getAll().observe(this, Observer<MutableList<DataRoom>> { this.onDataChange(it) })
-
-        binding?.button?.setOnClickListener{
-            homeViewModel.loadDataZip()
+        homeViewModel.let {
+            it.getData().observe(this, Observer { this.processData(it) })
+            it.loading().observe(this, Observer { this.loading(it) })
+            it.error().observe(this, Observer { this.error(it) })
         }
-        binding?.btn?.setOnClickListener {
-            db.insertData(DataRoom("tuan", (0..10).random()))
+
+
+        db.getAll().observe(this, Observer { this.onDataChange(it) })
+        binding?.apply {
+            button.setOnClickListener{
+                homeViewModel.loadData()
+            }
+            btn.setOnClickListener {
+                db.insertData(DataRoom("tuan", (0..10).random()))
+            }
         }
+
     }
     private fun onDataChange(data: MutableList<DataRoom>) {
-        binding?.list?.visibility = View.GONE
-        binding?.listDb?.visibility = View.VISIBLE
-        binding?.listDb?.setData(data)
+        binding?.apply {
+            list.visibility = View.GONE
+            listDb.visibility = View.VISIBLE
+            listDb.setData(data)
+        }
     }
-    private fun processData(data: MutableList<DetailUser>) {
-        binding?.list?.visibility = View.VISIBLE
-        binding?.listDb?.visibility = View.GONE
+    private fun processData(data: DataUser) {
+        binding?.apply {
+            list.visibility = View.VISIBLE
+            listDb.visibility = View.GONE
+        }
         try {
-            binding?.list?.setData(data)
+            binding?.list?.setData(data.data!!)
         }catch (e: Exception) {
         }
     }

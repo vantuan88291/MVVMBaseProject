@@ -25,13 +25,14 @@ open class BaseActivity : AppCompatActivity(), BaseView {
         if (fragment != null) {
             val fragmentManager = supportFragmentManager
             val fragmentTransaction = fragmentManager.beginTransaction()
-            fragmentTransaction.setCustomAnimations(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out
-            )
-            fragmentTransaction.replace(R.id.contentHome, fragment)
-            fragmentTransaction.addToBackStack(fragment.javaClass.simpleName)
-            fragmentTransaction.commitAllowingStateLoss()
+            fragmentTransaction.apply {
+                setCustomAnimations(
+                    android.R.anim.fade_in,
+                    android.R.anim.fade_out
+                )
+                replace(R.id.contentHome, fragment)
+                addToBackStack(fragment.javaClass.simpleName)
+            }.commitAllowingStateLoss()
         }
     }
 

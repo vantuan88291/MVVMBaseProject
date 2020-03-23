@@ -21,12 +21,13 @@ class ChatViewModel: ViewModel(), LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreateSocket() {
-        mSocket.connect()
-        mSocket.on("newmsg", onNewMsg)
-        mSocket.on("allData", getAllData)
-        mSocket.on("isTyping", onTyping)
-        mSocket.emit("getAllData")
-
+        mSocket.apply {
+            mSocket.connect()
+            mSocket.on("newmsg", onNewMsg)
+            mSocket.on("allData", getAllData)
+            mSocket.on("isTyping", onTyping)
+            mSocket.emit("getAllData")
+        }
     }
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun reConnectSocket() {
@@ -36,9 +37,11 @@ class ChatViewModel: ViewModel(), LifecycleObserver {
     }
     fun sendMsg(msg: String) {
         val jsonObject = JSONObject()
-        jsonObject.put("id", mId)
-        jsonObject.put("name", Build.MODEL)
-        jsonObject.put("message", msg)
+        jsonObject.apply {
+            put("id", mId)
+            put("name", Build.MODEL)
+            put("message", msg)
+        }
         mSocket.emit("sendmsg", jsonObject)
     }
     private val onNewMsg = object : Emitter.Listener {
