@@ -70,6 +70,8 @@ dependencies {
     implementation deps.di.koin
     implementation deps.di.koin_androix
     implementation deps.di.koin_viewmodel
+    implementation deps.perfomance.coroutines
+    implementation deps.perfomance.coroutines_core
     implementation (deps.resful.socket){
         exclude group: 'org.json', module: 'json'
     }
