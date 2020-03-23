@@ -19,7 +19,6 @@ class HomeViewModel(api: ApiGenerator): ViewModel(), BaseInteractor {
     private val dataServer: MutableLiveData<DataUser> by lazy { MutableLiveData<DataUser>() }
     private val isLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
     private val error: MutableLiveData<String> by lazy { MutableLiveData<String>() }
-    private val autodis = AutoDisposable(null)
     fun getData(): MutableLiveData<DataUser>{
         return this.dataServer
     }
@@ -65,8 +64,5 @@ class HomeViewModel(api: ApiGenerator): ViewModel(), BaseInteractor {
 //            }
 //        }
 
-    }
-    fun dispose() {
-        autodis.onDismiss()
     }
 }
