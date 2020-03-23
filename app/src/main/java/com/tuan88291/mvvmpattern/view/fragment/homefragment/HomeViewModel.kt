@@ -5,7 +5,6 @@ import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.data.remote.ApiGenerator
 import com.tuan88291.mvvmpattern.data.remote.BaseInteractor
 import com.tuan88291.mvvmpattern.data.remote.CallApi
-import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import com.tuan88291.mvvmpattern.view.BaseViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -16,7 +15,6 @@ import kotlinx.coroutines.withContext
 class HomeViewModel(api: ApiGenerator): BaseViewModel(), BaseInteractor {
     override val callAPi: CallApi = api.createApi()
     private val dataServer: MutableLiveData<DataUser> by lazy { MutableLiveData<DataUser>() }
-    private val autodis = AutoDisposable(null)
     fun getData(): MutableLiveData<DataUser>{
         return this.dataServer
     }
@@ -62,8 +60,5 @@ class HomeViewModel(api: ApiGenerator): BaseViewModel(), BaseInteractor {
 //            }
 //        }
 
-    }
-    fun dispose() {
-        autodis.onDismiss()
     }
 }

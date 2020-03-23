@@ -7,6 +7,6 @@ import retrofit2.http.Query
 
 @JvmSuppressWildcards
 interface CallApi {
-    @GET("ssdusers11")
-    suspend fun getList(@Query("sdsdpage") page: Int): DataUser
+    @GET("users")
+    suspend fun getList(@Query("page") page: Int): DataUser
 }
