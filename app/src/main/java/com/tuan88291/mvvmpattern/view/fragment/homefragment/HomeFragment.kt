@@ -66,7 +66,7 @@ class HomeFragment : BaseFragment() {
     private fun loading(isLoading: Boolean) {
         binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
-    private fun error(msg: String) {
+    private fun error(msg: Any) {
     }
     fun toast(msg: String) {
         Toast.makeText(mContext(), msg, Toast.LENGTH_LONG).show()

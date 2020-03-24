@@ -1,20 +1,17 @@
 package com.tuan88291.mvvmpattern.view.fragment.homefragment
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.data.remote.ApiGenerator
 import com.tuan88291.mvvmpattern.data.remote.BaseInteractor
 import com.tuan88291.mvvmpattern.data.remote.CallApi
 import com.tuan88291.mvvmpattern.data.remote.customcallback.BaseRetrofit
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
+import com.tuan88291.mvvmpattern.view.BaseViewModel
 
-class HomeViewModel(api: ApiGenerator): ViewModel(), BaseInteractor {
+class HomeViewModel(api: ApiGenerator): BaseViewModel(), BaseInteractor {
     override val callAPi: CallApi = api.createApi()
-
     private val dataServer: MutableLiveData<DataUser> by lazy { MutableLiveData<DataUser>() }
-    private val isLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
-    private val error: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     private val autodis = AutoDisposable(null)
     fun getData(): MutableLiveData<DataUser>{
         return this.dataServer
@@ -22,7 +19,7 @@ class HomeViewModel(api: ApiGenerator): ViewModel(), BaseInteractor {
     fun loading(): MutableLiveData<Boolean>{
         return this.isLoading
     }
-    fun error(): MutableLiveData<String>{
+    fun error(): MutableLiveData<Any>{
         return this.error
     }
     fun loadData(){
