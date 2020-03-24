@@ -1,21 +1,17 @@
 package com.tuan88291.mvvmpattern.view.fragment.homefragment
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.data.remote.ApiGenerator
 import com.tuan88291.mvvmpattern.data.remote.BaseInteractor
 import com.tuan88291.mvvmpattern.data.remote.CallApi
-import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
-import kotlinx.coroutines.CoroutineScope
+import com.tuan88291.mvvmpattern.utils.Utils.getMessageExeption
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class HomeViewModel(api: ApiGenerator): ViewModel(), BaseInteractor {
+class HomeViewModel(api: ApiGenerator): ViewModel(), BaseInteractor, LifecycleObserver {
     override val callAPi: CallApi = api.createApi()
-
+    private var job: Job? = null
     private val dataServer: MutableLiveData<DataUser> by lazy { MutableLiveData<DataUser>() }
     private val isLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>() }
     private val error: MutableLiveData<String> by lazy { MutableLiveData<String>() }
@@ -30,39 +26,18 @@ class HomeViewModel(api: ApiGenerator): ViewModel(), BaseInteractor {
     }
     fun loadData(){
         isLoading.postValue(true)
-        CoroutineScope(Main).launch {
-            try {
-                val data = withContext(IO) {callAPi.getList(1) }
-                dataServer.postValue(data)
-                isLoading.postValue(false)
-            } catch (e: Exception) {
-                isLoading.postValue(false)
-                error.postValue(e.toString())
-            }
+        val err = CoroutineExceptionHandler { context, error ->
+            this.error.postValue(getMessageExeption(error))
+            isLoading.postValue(false)
         }
-//        object : BaseRetrofit<DataUser>(callAPi.getList(1)) {
-//            override fun onFail(err: String) {
-//                error.postValue(err)
-//            }
-//
-//            override fun onLoading() {
-//                super.onLoading()
-//                isLoading.postValue(true)
-//            }
-//
-//            override fun onLoadComplete() {
-//                super.onLoadComplete()
-//                isLoading.postValue(false)
-//            }
-//
-//            override fun getDispose(): AutoDisposable? {
-//                return autodis
-//            }
-//
-//            override fun onGetApiComplete(t: DataUser) {
-//                dataServer.postValue(t)
-//            }
-//        }
-
+        job = CoroutineScope(err).launch {
+            val data = withContext(IO) {callAPi.getList(1) }
+            dataServer.postValue(data)
+            isLoading.postValue(false)
+        }
+    }
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun destroy() {
+        job?.cancel()
     }
 }
