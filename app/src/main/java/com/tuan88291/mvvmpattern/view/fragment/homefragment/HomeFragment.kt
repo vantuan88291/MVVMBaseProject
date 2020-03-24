@@ -74,4 +74,8 @@ class HomeFragment : BaseFragment() {
     fun toast(msg: String) {
         Toast.makeText(mContext(), msg, Toast.LENGTH_LONG).show()
     }
+    override fun onDestroy() {
+        super.onDestroy()
+        lifecycle.removeObserver(homeViewModel)
+    }
 }
