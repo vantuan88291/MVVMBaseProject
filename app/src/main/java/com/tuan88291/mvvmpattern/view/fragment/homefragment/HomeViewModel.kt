@@ -6,9 +6,7 @@ import com.tuan88291.mvvmpattern.data.remote.ApiGenerator
 import com.tuan88291.mvvmpattern.data.remote.BaseInteractor
 import com.tuan88291.mvvmpattern.data.remote.CallApi
 import com.tuan88291.mvvmpattern.utils.Utils.getMessageExeption
-import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
 import com.tuan88291.mvvmpattern.view.BaseViewModel
 import kotlinx.coroutines.*
 
