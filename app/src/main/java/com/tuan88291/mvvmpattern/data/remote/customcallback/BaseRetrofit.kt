@@ -15,7 +15,7 @@ import retrofit2.Response
 import java.io.IOException
 import java.net.SocketTimeoutException
 
-abstract class BaseRetrofit<T>(callback: Observable<T>) {
+abstract class BaseRetrofit<in T> (callback: Observable<T>) {
 
     init {
         getRetrofit(callback)
