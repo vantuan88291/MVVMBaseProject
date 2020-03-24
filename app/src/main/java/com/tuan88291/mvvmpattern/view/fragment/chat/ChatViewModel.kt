@@ -21,11 +21,11 @@ class ChatViewModel: ViewModel(), LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     fun onCreateSocket() {
         mSocket.apply {
-            mSocket.connect()
-            mSocket.on("newmsg", onNewMsg)
-            mSocket.on("allData", getAllData)
-            mSocket.on("isTyping", onTyping)
-            mSocket.emit("getAllData")
+            connect()
+            on("newmsg", onNewMsg)
+            on("allData", getAllData)
+            on("isTyping", onTyping)
+            emit("getAllData")
         }
     }
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

@@ -44,10 +44,10 @@ class ChatFragment : BaseFragment() {
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.list?.setmId(Build.MODEL)
         chatViewModel.let {
-            it.getTyping().observe(this, Observer<String> { this.onTyping(it) })
-            it.getLoading().observe(this, Observer<Boolean> { this.loading(it) })
-            it.getDataChat().observe(this, Observer<DataChat> { this.processData(it) })
-            it.getAllDataChat().observe(this, Observer<MutableList<DataChat>> { this.processAllData(it) })
+            it.getTyping().observe(this, Observer { this.onTyping(it) })
+            it.getLoading().observe(this, Observer { this.loading(it) })
+            it.getDataChat().observe(this, Observer { this.processData(it) })
+            it.getAllDataChat().observe(this, Observer { this.processAllData(it) })
         }
 
         binding?.send?.setOnClickListener {
