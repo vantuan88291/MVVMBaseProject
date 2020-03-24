@@ -3,6 +3,7 @@ package com.tuan88291.mvvmpattern.view.fragment.chat
 import android.os.Build
 import androidx.lifecycle.*
 import com.tuan88291.mvvmpattern.data.local.model.DataChat
+import com.tuan88291.mvvmpattern.utils.Common.SOCKET
 import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
@@ -15,7 +16,7 @@ class ChatViewModel: ViewModel(), LifecycleObserver {
     private val listTyping: MutableLiveData<String> by lazy { MutableLiveData<String>() }
     private val data: MutableLiveData<DataChat> by lazy { MutableLiveData<DataChat>() }
     private val allData: MutableLiveData<MutableList<DataChat>> by lazy { MutableLiveData<MutableList<DataChat>>() }
-    private val mSocket: Socket by lazy { IO.socket("http://192.168.31.196:3000") }
+    private val mSocket: Socket by lazy { IO.socket(SOCKET) }
     val mId: Int = (0..10).random()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
