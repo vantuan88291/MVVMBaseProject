@@ -11,7 +11,6 @@ import com.tuan88291.mvvmpattern.BaseFragment
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
 import com.tuan88291.mvvmpattern.data.local.model.DataUser
-import com.tuan88291.mvvmpattern.data.local.model.DetailUser
 import com.tuan88291.mvvmpattern.data.local.room.livedata.DBmodel
 import com.tuan88291.mvvmpattern.databinding.HomeFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,7 +24,10 @@ class HomeFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
         return binding!!.getRoot()
     }
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycle.addObserver(homeViewModel)
+    }
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
 
         homeViewModel.let {
@@ -67,6 +69,7 @@ class HomeFragment : BaseFragment() {
         binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
     private fun error(msg: Any) {
+        toast(msg.toString())
     }
     fun toast(msg: String) {
         Toast.makeText(mContext(), msg, Toast.LENGTH_LONG).show()
