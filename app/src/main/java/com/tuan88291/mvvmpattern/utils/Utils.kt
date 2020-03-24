@@ -11,4 +11,10 @@ object Utils {
             LogUtils.e("$msg: --->" + e.message)
         }
     }
+    fun getMessageExeption(error: Throwable): String {
+        if (error.message != null || error.message != ""){
+            return error.message!!
+        }
+        return "Server error"
+    }
 }
