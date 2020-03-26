@@ -3,8 +3,6 @@ package com.tuan88291.mvvmpattern.view.fragment.homefragment
 import androidx.lifecycle.MutableLiveData
 import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.data.remote.ApiGenerator
-import com.tuan88291.mvvmpattern.data.remote.BaseInteractor
-import com.tuan88291.mvvmpattern.data.remote.CallApi
 import com.tuan88291.mvvmpattern.data.remote.customcallback.BaseRetrofit
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import com.tuan88291.mvvmpattern.BaseViewModel
