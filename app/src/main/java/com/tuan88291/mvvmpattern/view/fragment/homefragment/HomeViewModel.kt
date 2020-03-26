@@ -1,38 +1,28 @@
 package com.tuan88291.mvvmpattern.view.fragment.homefragment
 
 import androidx.lifecycle.*
-import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.data.remote.ApiGenerator
-import com.tuan88291.mvvmpattern.data.remote.BaseInteractor
-import com.tuan88291.mvvmpattern.data.remote.CallApi
 import com.tuan88291.mvvmpattern.utils.Utils.getMessageExeption
 import kotlinx.coroutines.Dispatchers.IO
-import com.tuan88291.mvvmpattern.view.BaseViewModel
+import com.tuan88291.mvvmpattern.BaseViewModel
 import kotlinx.coroutines.*
 
-class HomeViewModel(api: ApiGenerator): BaseViewModel(), BaseInteractor, LifecycleObserver {
-    override val callAPi: CallApi = api.createApi()
+class HomeViewModel(api: ApiGenerator): BaseViewModel(api), LifecycleObserver {
     private var job: Job? = null
-    private val dataServer: MutableLiveData<DataUser> by lazy { MutableLiveData<DataUser>() }
-    fun getData(): MutableLiveData<DataUser>{
-        return this.dataServer
-    }
-    fun loading(): MutableLiveData<Boolean>{
-        return this.isLoading
-    }
-    fun error(): MutableLiveData<Any>{
-        return this.error
+    private val state: MutableLiveData<State> by lazy { MutableLiveData<State>() }
+    fun getData(): MutableLiveData<State>{
+        return this.state
     }
     fun loadData(){
-        isLoading.postValue(true)
+        state.value = State.Loading(true)
         val err = CoroutineExceptionHandler { context, error ->
-            this.error.postValue(getMessageExeption(error))
-            isLoading.postValue(false)
+            state.value = State.Failure(getMessageExeption(error))
+            state.value = State.Loading(false)
         }
         job = CoroutineScope(err).launch {
             val data = withContext(IO) {callAPi.getList(1) }
-            dataServer.postValue(data)
-            isLoading.postValue(false)
+            state.value = State.Success(data)
+            state.value = State.Loading(false)
         }
     }
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
