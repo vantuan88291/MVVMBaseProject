@@ -9,33 +9,26 @@ import com.tuan88291.mvvmpattern.data.remote.customcallback.BaseRetrofit
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import com.tuan88291.mvvmpattern.BaseViewModel
 
-class HomeViewModel(api: ApiGenerator): BaseViewModel(), BaseInteractor {
-    override val callAPi: CallApi = api.createApi()
-    private val dataServer: MutableLiveData<DataUser> by lazy { MutableLiveData<DataUser>() }
+class HomeViewModel(api: ApiGenerator): BaseViewModel(api) {
+    private val state: MutableLiveData<State> by lazy { MutableLiveData<State>() }
     private val autodis = AutoDisposable(null)
-    fun getData(): MutableLiveData<DataUser>{
-        return this.dataServer
-    }
-    fun loading(): MutableLiveData<Boolean>{
-        return this.isLoading
-    }
-    fun error(): MutableLiveData<Any>{
-        return this.error
+    fun getData(): MutableLiveData<State>{
+        return this.state
     }
     fun loadData(){
         object : BaseRetrofit<DataUser>(callAPi.getList(1)) {
             override fun onFail(err: String) {
-                error.postValue(err)
+                state.value = State.Failure(err)
             }
 
             override fun onLoading() {
                 super.onLoading()
-                isLoading.postValue(true)
+                state.value = State.Loading(true)
             }
 
             override fun onLoadComplete() {
                 super.onLoadComplete()
-                isLoading.postValue(false)
+                state.value = State.Loading(false)
             }
 
             override fun getDispose(): AutoDisposable? {
@@ -43,7 +36,7 @@ class HomeViewModel(api: ApiGenerator): BaseViewModel(), BaseInteractor {
             }
 
             override fun onGetApiComplete(t: DataUser) {
-                dataServer.postValue(t)
+                state.value = State.Success(t)
             }
         }
     }
