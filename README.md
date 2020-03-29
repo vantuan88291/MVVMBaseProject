@@ -1,6 +1,6 @@
 # MVVM with databinding
 
-Library: DI with koin, RXjava, room, mvvm, Rx retrofit
+Library: DI with koin, room, mvvm, coroutine, Retrofit2
 
 This app has a small example about chat with socket io using MVVM
 
