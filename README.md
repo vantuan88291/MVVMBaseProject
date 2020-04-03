@@ -4,6 +4,10 @@ Library: DI with koin, room, mvvm, coroutine, Retrofit2
 
 This app has a small example about chat with socket io using MVVM
 
+## Coroutine:
+
+Call api with coroutine visit to branch: https://github.com/vantuan88291/MVVMBaseProject/tree/coroutine
+
 ## Explanation of folder structure
 
 ```

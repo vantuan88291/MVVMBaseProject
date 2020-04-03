@@ -14,6 +14,7 @@ import com.tuan88291.mvvmpattern.BaseFragment
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.model.DataChat
 import com.tuan88291.mvvmpattern.databinding.AboutFragmentBinding
+import com.tuan88291.mvvmpattern.utils.TextWatcherWrap
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import com.tuan88291.mvvmpattern.utils.observe.addTo
 import io.reactivex.Observable
@@ -55,18 +56,10 @@ class ChatFragment : BaseFragment() {
             chatViewModel.sendMsg(binding?.input?.text?.toString()!!)
             binding?.input?.setText("")
         }
-        binding?.input?.addTextChangedListener(object : TextWatcher{
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+        binding?.input?.addTextChangedListener(object : TextWatcherWrap() {
+            override fun onTextChangedWrap(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 chatViewModel.emitTyping()
             }
-
         })
         mContext()?.setUpTyping()
     }
