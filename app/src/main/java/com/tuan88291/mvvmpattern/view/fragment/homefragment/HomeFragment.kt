@@ -1,6 +1,7 @@
 package com.tuan88291.mvvmpattern.view.fragment.homefragment
 
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.tuan88291.mvvmpattern.BaseFragment
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
@@ -20,6 +22,8 @@ class HomeFragment : BaseFragment() {
     private val homeViewModel: HomeViewModel by viewModel()
     private var binding: HomeFragmentBinding? = null
     private val db: DBmodel by viewModel()
+    private val statePage: PageState by viewModel()
+    private var currentPosition: Int = 0
 
     override fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
@@ -30,13 +34,22 @@ class HomeFragment : BaseFragment() {
         homeViewModel.getData().observe(this, Observer { this.processData(it) })
         homeViewModel.getStateLoadAdapter().observe(this, Observer { binding?.list?.setStateLoading(it) })
         db.getAll().observe(this, Observer { this.onDataChange(it) })
-        homeViewModel.loadData(true)
+        if (statePage.currentPosition.value != null) {
+            currentPosition = statePage.currentPosition.value!!
+        }
+        statePage.currentPosition.observe(this, Observer { binding?.btn?.text = "$it" })
+//        homeViewModel.loadData(true)
         binding?.apply {
             btn.setOnClickListener {
                 db.insertData(DataRoom("tuan", (0..10).random()))
             }
             list.onLoadmore = {
                 homeViewModel.loadData(false)
+            }
+            list.visibility = View.GONE
+            listDb.visibility = View.VISIBLE
+            listDb.currentPosition = {
+                statePage.currentPosition.value = it
             }
         }
     }
@@ -45,6 +58,9 @@ class HomeFragment : BaseFragment() {
             list.visibility = View.GONE
             listDb.visibility = View.VISIBLE
             listDb.setData(data)
+            Handler().postDelayed({
+                listDb.scrollToPosition(currentPosition)
+            }, 100)
         }
     }
     private fun processData(state: State) {

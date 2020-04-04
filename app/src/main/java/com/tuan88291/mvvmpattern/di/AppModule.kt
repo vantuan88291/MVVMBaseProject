@@ -10,6 +10,7 @@ import com.tuan88291.mvvmpattern.data.remote.service.ServiceApi
 import com.tuan88291.mvvmpattern.data.remote.service.iServiceApi
 import com.tuan88291.mvvmpattern.view.fragment.chat.ChatViewModel
 import com.tuan88291.mvvmpattern.view.fragment.homefragment.HomeViewModel
+import com.tuan88291.mvvmpattern.view.fragment.homefragment.PageState
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -22,6 +23,7 @@ val dbModule = module {
 val mvvmModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { ChatViewModel() }
+    viewModel { PageState() }
 }
 val RetrofitModule = module {
     single<iServiceApi> { ServiceApi() }

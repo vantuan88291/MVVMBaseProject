@@ -10,6 +10,7 @@ import com.tuan88291.mvvmpattern.view.adapter.DBApdapter
 class ListItemDB(context: Context, attrs: AttributeSet) : RecyclerView(context, attrs) {
     private var mLayoutManager: LinearLayoutManager? = null
     private var mAdapter: DBApdapter? = null
+    var currentPosition: ((Int) -> Unit)? = null
     init {
         setUpList(context)
     }
@@ -21,6 +22,11 @@ class ListItemDB(context: Context, attrs: AttributeSet) : RecyclerView(context, 
         }
         layoutManager = mLayoutManager
         adapter = mAdapter
+        addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                currentPosition?.invoke(mLayoutManager?.findLastVisibleItemPosition()!!)
+            }
+        })
     }
 
     fun setData(data: MutableList<DataRoom>) {
