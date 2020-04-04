@@ -29,7 +29,8 @@ ext.lib = [
         rxjava  : '2.2.12',
         multidex  : '2.0.1',
         extensions  : '1.1.1',
-        sdp  : '1.0.6'
+        sdp  : '1.0.6',
+        recycler_view  : '1.2.0-alpha02'
 ]
 ext.deps = [
         gradle_plugins: [
@@ -75,6 +76,7 @@ ext.deps = [
                 kotlin: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin_version",
                 databinding: "com.android.databinding:compiler:$arch.binding_compiler",
                 sdp: "com.intuit.sdp:sdp-android:$lib.sdp",
+                recycler_view: "androidx.recyclerview:recyclerview:$lib.recycler_view",
         ],
 
         test: [

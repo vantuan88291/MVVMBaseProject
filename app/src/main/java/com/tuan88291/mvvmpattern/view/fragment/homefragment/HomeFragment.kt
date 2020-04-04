@@ -1,6 +1,7 @@
 package com.tuan88291.mvvmpattern.view.fragment.homefragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,13 +28,15 @@ class HomeFragment : BaseFragment() {
 
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
         homeViewModel.getData().observe(this, Observer { this.processData(it) })
+        homeViewModel.getStateLoadAdapter().observe(this, Observer { binding?.list?.setStateLoading(it) })
         db.getAll().observe(this, Observer { this.onDataChange(it) })
+        homeViewModel.loadData(true)
         binding?.apply {
-            button.setOnClickListener{
-                homeViewModel.loadData()
-            }
             btn.setOnClickListener {
                 db.insertData(DataRoom("tuan", (0..10).random()))
+            }
+            list.onLoadmore = {
+                homeViewModel.loadData(false)
             }
         }
     }
@@ -58,6 +61,9 @@ class HomeFragment : BaseFragment() {
         }
         try {
             binding?.list?.setData(data.data!!)
+            if(data.data?.size == 0) {
+                homeViewModel.finishLoadMore()
+            }
         }catch (e: Exception) {
         }
     }

@@ -70,6 +70,7 @@ dependencies {
     implementation deps.di.koin
     implementation deps.di.koin_androix
     implementation deps.di.koin_viewmodel
+    implementation deps.support.recycler_view
     implementation (deps.resful.socket){
         exclude group: 'org.json', module: 'json'
     }
