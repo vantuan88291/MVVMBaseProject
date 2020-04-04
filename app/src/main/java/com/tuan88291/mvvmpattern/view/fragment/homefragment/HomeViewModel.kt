@@ -14,6 +14,7 @@ class HomeViewModel(api: ApiGenerator): BaseViewModel(api) {
     private val stateAdapter: MutableLiveData<AdapterStateLoad> by lazy { MutableLiveData<AdapterStateLoad>() }
     private val autodis = AutoDisposable(null)
     private var page: Int = 0
+    private var isLoadMore = true
     fun getData(): MutableLiveData<State>{
         return this.state
     }
@@ -26,7 +27,7 @@ class HomeViewModel(api: ApiGenerator): BaseViewModel(api) {
             loadRepoData()
         } else {
             val state = stateAdapter.value
-            if (state != null && state is AdapterStateLoad.LoadingSuccess && state !is AdapterStateLoad.FinishLoadMore) {
+            if (state != null && state is AdapterStateLoad.LoadingSuccess && isLoadMore) {
                 loadRepoData()
             }
         }
@@ -55,11 +56,9 @@ class HomeViewModel(api: ApiGenerator): BaseViewModel(api) {
 
             override fun onGetApiComplete(t: DataUser) {
                 state.value = State.Success(t)
+                if (t.data?.size == 0) isLoadMore = false
             }
         }
-    }
-    fun finishLoadMore() {
-        stateAdapter.value = AdapterStateLoad.FinishLoadMore
     }
     fun dispose() {
         autodis.onDismiss()

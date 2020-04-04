@@ -61,9 +61,6 @@ class HomeFragment : BaseFragment() {
         }
         try {
             binding?.list?.setData(data.data!!)
-            if(data.data?.size == 0) {
-                homeViewModel.finishLoadMore()
-            }
         }catch (e: Exception) {
         }
     }

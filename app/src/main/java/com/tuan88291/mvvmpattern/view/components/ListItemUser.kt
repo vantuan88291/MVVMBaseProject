@@ -23,21 +23,20 @@ class ListItemUser(context: Context, attrs: AttributeSet) : RecyclerView(context
 
     private fun setUpList(context: Context) {
         mLayoutManager = LinearLayoutManager(context)
-        mAdapter = HomeAdapter(context)
+        mAdapter = HomeAdapter(context).apply {
+            stateRestorationPolicy = Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+        }
         mFooterAdapter = AdapterFooter(context)
         val mergedAdapter = MergeAdapter(mAdapter, mFooterAdapter)
-        this.apply {
-            adapter = mergedAdapter
-            layoutManager = mLayoutManager
-        }
-        this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        layoutManager = mLayoutManager
+        adapter = mergedAdapter
+        addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0 && mLayoutManager?.findLastVisibleItemPosition()!! + VISIBLE_THRESHOLD >= mLayoutManager?.itemCount!!) {
                     onLoadmore?.invoke()
                 }
             }
-        }
-        )
+        })
     }
     fun setData(data: MutableList<DetailUser>) = mAdapter?.setData(data)
     fun setStateLoading(state: AdapterStateLoad) = mFooterAdapter?.setState(state)

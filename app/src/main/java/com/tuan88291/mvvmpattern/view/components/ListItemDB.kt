@@ -10,19 +10,19 @@ import com.tuan88291.mvvmpattern.view.adapter.DBApdapter
 class ListItemDB(context: Context, attrs: AttributeSet) : RecyclerView(context, attrs) {
     private var mLayoutManager: LinearLayoutManager? = null
     private var mAdapter: DBApdapter? = null
-
     init {
         setUpList(context)
     }
 
     private fun setUpList(context: Context) {
         mLayoutManager = LinearLayoutManager(context)
-        mAdapter = DBApdapter(context)
-        this.apply {
-            adapter = mAdapter
-            layoutManager = mLayoutManager
+        mAdapter = DBApdapter(context).apply {
+            stateRestorationPolicy = Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         }
+        layoutManager = mLayoutManager
+        adapter = mAdapter
     }
+
     fun setData(data: MutableList<DataRoom>) {
         mAdapter?.setData(data)
     }
