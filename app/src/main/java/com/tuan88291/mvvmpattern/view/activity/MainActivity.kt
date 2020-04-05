@@ -7,6 +7,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.tuan88291.mvvmpattern.BaseActivity
@@ -25,7 +26,6 @@ import java.util.concurrent.TimeUnit
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var binding: ActivityMainBinding? = null
-    private var item: Data? = null
     private var autodis: AutoDisposable? =  null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +33,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         autodis = AutoDisposable(this.lifecycle)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding?.appBar?.toolbar)
-        item = ViewModelProviders.of(this).get(Data::class.java)
-
         val toggle = ActionBarDrawerToggle(
             this, binding?.drawerLayout, binding?.appBar?.toolbar,
             R.string.navigation_drawer_open,
@@ -58,16 +56,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-    fun setItem(it: String) {
-        item?.example = it
-    }
-
-    fun getItem(): String {
-        return item!!.example
-    }
     fun setTyping(msg: String) {
         binding?.appBar?.apply {
-            typing.visibility = View.VISIBLE
+            typing.isGone = false
             typing.text = "$msg is typing..."
         }
         setUpTyping()
@@ -78,7 +69,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map {
-                binding?.appBar?.typing?.visibility = View.GONE
+                binding?.appBar?.typing?.isGone = true
             }
             .subscribe().addTo(autodis!!)
 

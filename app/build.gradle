@@ -72,6 +72,7 @@ dependencies {
     implementation deps.di.koin_viewmodel
     implementation deps.perfomance.coroutines
     implementation deps.perfomance.coroutines_core
+    implementation deps.support.recycler_view
     implementation (deps.resful.socket){
         exclude group: 'org.json', module: 'json'
     }
