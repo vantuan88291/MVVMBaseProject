@@ -4,7 +4,6 @@
     <data></data>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:tools="http://schemas.android.com/tools"
-    android:padding="@dimen/_8sdp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -14,6 +13,7 @@
         android:visibility="gone"
         android:layout_width="@dimen/_20sdp"
         android:layout_height="@dimen/_20sdp"
+        android:layout_margin="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
