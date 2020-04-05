@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.tuan88291.mvvmpattern.BaseFragment
@@ -42,8 +43,8 @@ class HomeFragment : BaseFragment() {
     }
     private fun onDataChange(data: MutableList<DataRoom>) {
         binding?.apply {
-            list.visibility = View.GONE
-            listDb.visibility = View.VISIBLE
+            list.isGone = true
+            listDb.isGone = false
             listDb.setData(data)
         }
     }
@@ -56,8 +57,8 @@ class HomeFragment : BaseFragment() {
     }
     private fun setDataList(data: DataUser) {
         binding?.apply {
-            list.visibility = View.VISIBLE
-            listDb.visibility = View.GONE
+            list.isGone = false
+            listDb.isGone = true
         }
         try {
             binding?.list?.setData(data.data!!)
@@ -65,7 +66,7 @@ class HomeFragment : BaseFragment() {
         }
     }
     private fun loading(isLoading: Boolean) {
-        binding?.progressBar?.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding?.progressBar?.isGone = !isLoading
     }
     private fun error(msg: Any) {
         toast(msg.toString())
