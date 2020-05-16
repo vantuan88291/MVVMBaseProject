@@ -16,6 +16,7 @@ import com.tuan88291.mvvmpattern.data.local.model.Data
 import com.tuan88291.mvvmpattern.databinding.ActivityMainBinding
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import com.tuan88291.mvvmpattern.utils.observe.addTo
+import com.tuan88291.mvvmpattern.view.fragment.canvasfragment.CanvasFragment
 import com.tuan88291.mvvmpattern.view.fragment.chat.ChatFragment
 import com.tuan88291.mvvmpattern.view.fragment.homefragment.HomeFragment
 import io.reactivex.Observable
@@ -45,7 +46,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             it.navView.setNavigationItemSelectedListener(this)
             it.appBar.title.text = "Call API"
         }
-        addFragment(HomeFragment())
+        addFragment(CanvasFragment())
     }
 
     override fun onBackPressed() {
@@ -103,6 +104,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             }
             R.id.nav_slideshow -> {
+                addFragment(CanvasFragment())
 
             }
             R.id.nav_manage -> {
