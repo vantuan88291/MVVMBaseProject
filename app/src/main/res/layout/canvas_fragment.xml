@@ -11,14 +11,15 @@
         android:layout_height="match_parent">
 
         <com.tuan88291.mvvmpattern.view.components.CanvasDraw
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="368dp"
+            android:layout_height="388dp"
             android:layout_marginBottom="24dp"
             android:background="#FFEB3B"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.11"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
