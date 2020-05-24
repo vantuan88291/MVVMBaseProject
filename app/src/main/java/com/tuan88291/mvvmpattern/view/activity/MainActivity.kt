@@ -45,7 +45,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             it.navView.setNavigationItemSelectedListener(this)
             it.appBar.title.text = "Call API"
         }
-        addFragment(HomeFragment())
+        addFragment(HomeFragment(), "Home")
     }
 
     override fun onBackPressed() {
@@ -95,11 +95,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         when (item.itemId) {
             R.id.nav_camera -> {
                 binding?.appBar?.title?.text = "Call API"
-                addFragment(HomeFragment())
+                addFragment(HomeFragment(), "Home")
             }
             R.id.nav_gallery -> {
                 binding?.appBar?.title?.text = "Chat socket"
-                addFragment(ChatFragment())
+                addFragment(ChatFragment(), "Chat")
 
             }
             R.id.nav_slideshow -> {
