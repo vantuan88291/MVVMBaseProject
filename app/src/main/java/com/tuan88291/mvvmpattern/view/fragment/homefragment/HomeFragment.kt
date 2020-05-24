@@ -1,5 +1,6 @@
 package com.tuan88291.mvvmpattern.view.fragment.homefragment
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,18 +16,20 @@ import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
 import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.data.local.room.livedata.DBmodel
 import com.tuan88291.mvvmpattern.databinding.HomeFragmentBinding
+import com.tuan88291.mvvmpattern.utils.SharedPrefs
+import io.reactivex.disposables.Disposable
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment() {
     private val homeViewModel: HomeViewModel by viewModel()
     private var binding: HomeFragmentBinding? = null
     private val db: DBmodel by viewModel()
-
+    private var listener: SharedPreferences.OnSharedPreferenceChangeListener? = null
     override fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
         return binding!!.getRoot()
     }
-
+    var disposable: Disposable? = null
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
         homeViewModel.getData().observe(this, Observer { this.processData(it) })
         homeViewModel.getStateLoadAdapter().observe(this, Observer { binding?.list?.setStateLoading(it) })
@@ -39,7 +42,18 @@ class HomeFragment : BaseFragment() {
             list.onLoadmore = {
                 homeViewModel.loadData(false)
             }
+            button.setOnClickListener {
+                SharedPrefs.instance?.put("num", (0..10).random())
+            }
         }
+        disposable = SharedPrefs.instance?.get("num", Int::class.java)?.subscribe {
+            binding?.button?.text = it.toString()
+       }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        disposable?.dispose()
     }
     private fun onDataChange(data: MutableList<DataRoom>) {
         binding?.apply {
