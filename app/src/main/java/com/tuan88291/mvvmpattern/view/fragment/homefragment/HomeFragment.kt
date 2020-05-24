@@ -17,6 +17,7 @@ import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.data.local.room.livedata.DBmodel
 import com.tuan88291.mvvmpattern.databinding.HomeFragmentBinding
 import com.tuan88291.mvvmpattern.utils.SharedPrefs
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -46,9 +47,9 @@ class HomeFragment : BaseFragment() {
                 SharedPrefs.instance?.put("num", (0..10).random())
             }
         }
-        disposable = SharedPrefs.instance?.get("num", Int::class.java)?.subscribe {
+        disposable = SharedPrefs.instance?.get("num", Int::class.java)?.observeOn(AndroidSchedulers.mainThread())?.subscribe {
             binding?.button?.text = it.toString()
-       }
+        }
     }
 
     override fun onPause() {
