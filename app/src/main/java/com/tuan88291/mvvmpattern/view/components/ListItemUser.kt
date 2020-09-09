@@ -2,9 +2,8 @@ package com.tuan88291.mvvmpattern.view.components
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.MergeAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.tuan88291.mvvmpattern.data.local.model.DetailUser
 import com.tuan88291.mvvmpattern.view.adapter.AdapterFooter
@@ -27,7 +26,7 @@ class ListItemUser(context: Context, attrs: AttributeSet) : RecyclerView(context
             stateRestorationPolicy = Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         }
         mFooterAdapter = AdapterFooter(context)
-        val mergedAdapter = MergeAdapter(mAdapter, mFooterAdapter)
+        val mergedAdapter = ConcatAdapter(mAdapter, mFooterAdapter)
         layoutManager = mLayoutManager
         adapter = mergedAdapter
         addOnScrollListener(object : RecyclerView.OnScrollListener() {
