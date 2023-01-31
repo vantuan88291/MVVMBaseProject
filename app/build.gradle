@@ -64,6 +64,7 @@ dependencies {
     androidTestImplementation deps.db.test
     implementation deps.lifecycler.extension
     implementation deps.lifecycler.viewmodel
+    implementation deps.lifecycler.viewmodelktx
     implementation deps.lifecycler.java8
     implementation deps.resful.gson
     kapt deps.support.databinding
