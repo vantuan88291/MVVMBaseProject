@@ -1,38 +1,38 @@
 ext.versions = [
         min_sdk             : 16,
-        compile_sdk         : 29,
+        compile_sdk         : 32,
         publish_version     : "1.0",
         publish_version_code: 1,
         package             : "com.tuan88291.mvvmpattern",
-        kotlin_version      : '1.4.0',
-        build               : '4.0.1'
+        kotlin_version      : '1.7.20',
+        build               : '7.4.0'
 ]
 ext.arch = [
         koin            : '2.0.1',
-        room            : '2.2.5',
-        lifecycler      : '2.2.0',
-        appcompat       : '1.2.0',
-        constraintlayout: '2.0.1',
-        material        : '1.2.1',
-        ktx             : '1.5.0-alpha02',
-        binding_compiler: '3.3.1',
-        test            : '1.3.0-alpha02'
+        room            : '2.4.3',
+        lifecycler      : '2.4.1',
+        appcompat       : '1.5.1',
+        constraintlayout: '2.1.4',
+        material        : '1.8.0',
+        ktx             : '1.8.0',
+        binding_compiler: '3.5.0',
+        test            : '1.5.2'
 ]
 ext.lib = [
-        gson           : '2.8.6',
-        utilcode       : '1.5.1',
-        rxadapter      : '1.0.0',
-        interceptor    : '4.8.1',
-        retrofit       : '2.9.0',
-        socket         : '1.0.0',
-        rxandroid      : '2.1.1',
-        rxjava         : '2.2.12',
-        multidex       : '2.0.1',
-        extensions     : '1.1.1',
-        sdp            : '1.0.6',
+        gson         : '2.10.1',
+        utilcode     : '1.31.1',
+        rxadapter    : '1.0.0',
+        interceptor  : '4.10.0',
+        retrofit     : '2.9.0',
+        socket       : '1.0.0',
+        rxandroid    : '2.1.1',
+        rxjava       : '2.2.12',
+        multidex     : '2.0.1',
+        extensions   : '1.1.1',
+        sdp          : '1.0.6',
+        recycler_view: '1.2.1',
         coroutines     : '1.3.3',
-        coroutines_core: '1.3.3',
-        recycler_view  : '1.2.0-alpha05'
+        coroutines_core: '1.3.3'
 ]
 ext.deps = [
         gradle_plugins: [
@@ -41,13 +41,13 @@ ext.deps = [
         ],
 
         di: [
-                koin: "org.koin:koin-android:$arch.koin",
-                koin_androix: "org.koin:koin-androidx-scope:$arch.koin",
-                koin_viewmodel: "org.koin:koin-androidx-viewmodel:$arch.koin"
+                koin: "io.insert-koin:koin-android:$arch.koin",
+                koin_androix: "io.insert-koin:koin-androidx-scope:$arch.koin",
+                koin_viewmodel: "io.insert-koin:koin-androidx-viewmodel:$arch.koin"
         ],
         resful: [
                 gson: "com.google.code.gson:gson:$lib.gson",
-                logd: "com.blankj:utilcode:$lib.utilcode",
+                logd: "com.blankj:utilcodex:$lib.utilcode",
                 retrofit2: "com.squareup.retrofit2:retrofit:$lib.retrofit",
                 rx_retrofit: "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:$lib.rxadapter",
                 converter: "com.squareup.retrofit2:converter-gson:$lib.retrofit",
@@ -65,6 +65,7 @@ ext.deps = [
         lifecycler: [
                 java8: "androidx.lifecycle:lifecycle-common-java8:$arch.lifecycler",
                 viewmodel: "androidx.lifecycle:lifecycle-viewmodel:$arch.lifecycler",
+                viewmodelktx: "androidx.lifecycle:lifecycle-viewmodel-ktx:$arch.lifecycler",
                 extension: "android.arch.lifecycle:extensions:$lib.extensions",
         ],
         db: [
