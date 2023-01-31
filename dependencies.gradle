@@ -31,8 +31,7 @@ ext.lib = [
         extensions   : '1.1.1',
         sdp          : '1.0.6',
         recycler_view: '1.2.1',
-        coroutines     : '1.3.3',
-        coroutines_core: '1.3.3'
+        coroutines     : '1.6.4'
 ]
 ext.deps = [
         gradle_plugins: [
@@ -60,7 +59,7 @@ ext.deps = [
                 rxjava: "io.reactivex.rxjava2:rxjava:$lib.rxjava",
                 multidex: "androidx.multidex:multidex:$lib.multidex",
                 coroutines: "org.jetbrains.kotlinx:kotlinx-coroutines-android:$lib.coroutines",
-                coroutines_core: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$lib.coroutines_core",
+                coroutines_core: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$lib.coroutines",
         ],
         lifecycler: [
                 java8: "androidx.lifecycle:lifecycle-common-java8:$arch.lifecycler",
