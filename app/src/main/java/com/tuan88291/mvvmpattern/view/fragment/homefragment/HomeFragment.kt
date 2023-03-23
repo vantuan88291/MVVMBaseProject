@@ -24,21 +24,25 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class HomeFragment : BaseFragment() {
     private val homeViewModel: HomeViewModel by viewModel()
     private var binding: HomeFragmentBinding? = null
-    private val db: DBmodel by viewModel()
-    private var listener: SharedPreferences.OnSharedPreferenceChangeListener? = null
-    override fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun setView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false)
         return binding!!.getRoot()
     }
+
     var disposable: Disposable? = null
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
         homeViewModel.getData().observe(this, Observer { this.processData(it) })
-        homeViewModel.getStateLoadAdapter().observe(this, Observer { binding?.list?.setStateLoading(it) })
-        db.getAll().observe(this, Observer { this.onDataChange(it) })
+        homeViewModel.getStateLoadAdapter()
+            .observe(this, Observer { binding?.list?.setStateLoading(it) })
+        homeViewModel.getAllDatabase().observe(this, Observer { this.onDataChange(it) })
         homeViewModel.loadData(true)
         binding?.apply {
             btn.setOnClickListener {
-                db.insertData(DataRoom("tuan", (0..10).random()))
+                homeViewModel.insertDatabase(DataRoom("tuan", (0..10).random()))
             }
             list.onLoadmore = {
                 homeViewModel.loadData(false)
@@ -47,7 +51,8 @@ class HomeFragment : BaseFragment() {
                 SharedPrefs.instance?.put("num", (0..10).random())
             }
         }
-        disposable = SharedPrefs.instance?.get("num", Int::class.java)?.observeOn(AndroidSchedulers.mainThread())?.subscribe {
+        disposable = SharedPrefs.instance?.get("num", Int::class.java)
+            ?.observeOn(AndroidSchedulers.mainThread())?.subscribe {
             binding?.button?.text = it.toString()
         }
     }
@@ -56,6 +61,7 @@ class HomeFragment : BaseFragment() {
         super.onPause()
         disposable?.dispose()
     }
+
     private fun onDataChange(data: MutableList<DataRoom>) {
         binding?.apply {
             list.isGone = true
@@ -63,6 +69,7 @@ class HomeFragment : BaseFragment() {
             listDb.setData(data)
         }
     }
+
     private fun processData(state: State) {
         when (state) {
             is State.Failure -> error(state.message)
@@ -70,6 +77,7 @@ class HomeFragment : BaseFragment() {
             is State.Success<*> -> setDataList(state.data as DataUser)
         }
     }
+
     private fun setDataList(data: DataUser) {
         binding?.apply {
             list.isGone = false
@@ -77,15 +85,18 @@ class HomeFragment : BaseFragment() {
         }
         try {
             binding?.list?.setData(data.data!!)
-        }catch (e: Exception) {
+        } catch (e: Exception) {
         }
     }
+
     private fun loading(isLoading: Boolean) {
         binding?.progressBar?.isGone = !isLoading
     }
+
     private fun error(msg: Any) {
         toast(msg.toString())
     }
+
     fun toast(msg: String) {
         Toast.makeText(mContext(), msg, Toast.LENGTH_LONG).show()
     }

@@ -20,7 +20,7 @@ val dbModule = module {
     viewModel { DBmodel(get()) }
 }
 val mvvmModule = module {
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel(get(), get()) }
     viewModel { ChatViewModel() }
 }
 val RetrofitModule = module {

@@ -1,20 +1,29 @@
 package com.tuan88291.mvvmpattern.view.fragment.homefragment
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.data.remote.ApiGenerator
 import com.tuan88291.mvvmpattern.data.remote.customcallback.BaseRetrofit
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import com.tuan88291.mvvmpattern.BaseViewModel
+import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
+import com.tuan88291.mvvmpattern.data.local.room.livedata.DBmodel
 import com.tuan88291.mvvmpattern.view.adapter.AdapterStateLoad
 
-class HomeViewModel(api: ApiGenerator): BaseViewModel(api) {
+class HomeViewModel(api: ApiGenerator, val db: DBmodel): BaseViewModel(api) {
     private val state: MutableLiveData<State> by lazy { MutableLiveData<State>() }
     private val stateAdapter: MutableLiveData<AdapterStateLoad> by lazy { MutableLiveData<AdapterStateLoad>() }
     private val autodis = AutoDisposable(null)
     private var page: Int = 0
     private var isLoadMore = true
+
+    fun getAllDatabase(): LiveData<MutableList<DataRoom>> {
+        return db.getAll()
+    }
+    fun insertDatabase(item: DataRoom) {
+        db.insertData(item)
+    }
     fun getData(): MutableLiveData<State>{
         return this.state
     }
