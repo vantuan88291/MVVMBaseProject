@@ -17,7 +17,7 @@ val dbModule = module {
     single { Room.databaseBuilder(get(), AppDatabase::class.java, "user-database").build() }
     single { get<AppDatabase>().queries() }
     single<iDBRepository> { DBRepository(get()) }
-    viewModel { DBmodel(get()) }
+    factory { DBmodel(get()) }
 }
 val mvvmModule = module {
     viewModel { HomeViewModel(get(), get()) }
