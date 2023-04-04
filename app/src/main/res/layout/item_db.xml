@@ -16,14 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <com.tuan88291.mvvmpattern.view.components.TextViewWrap
             android:id="@+id/age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{`Age:` + userDB.age}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        <TextView
+        <com.tuan88291.mvvmpattern.view.components.TextViewWrap
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
