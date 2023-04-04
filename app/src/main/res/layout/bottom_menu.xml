@@ -27,12 +27,12 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
+            <com.tuan88291.mvvmpattern.view.components.ImageWrap
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_menu_camera" />
 
-            <TextView
+            <com.tuan88291.mvvmpattern.view.components.TextViewWrap
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Home" />
@@ -49,12 +49,12 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/linearLayout">
 
-            <ImageView
+            <com.tuan88291.mvvmpattern.view.components.ImageWrap
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_menu_camera" />
 
-            <TextView
+            <com.tuan88291.mvvmpattern.view.components.TextViewWrap
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Home" />
@@ -73,12 +73,12 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/linearLayout1">
 
-            <ImageView
+            <com.tuan88291.mvvmpattern.view.components.ImageWrap
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_menu_camera" />
 
-            <TextView
+            <com.tuan88291.mvvmpattern.view.components.TextViewWrap
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Home" />
@@ -95,12 +95,12 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/linearLayout2">
 
-            <ImageView
+            <com.tuan88291.mvvmpattern.view.components.ImageWrap
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_menu_camera" />
 
-            <TextView
+            <com.tuan88291.mvvmpattern.view.components.TextViewWrap
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Home" />
@@ -117,12 +117,12 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/linearLayout3">
 
-            <ImageView
+            <com.tuan88291.mvvmpattern.view.components.ImageWrap
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_menu_camera" />
 
-            <TextView
+            <com.tuan88291.mvvmpattern.view.components.TextViewWrap
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Home" />
