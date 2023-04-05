@@ -1,6 +1,7 @@
 package com.tuan88291.mvvmpattern.view.activity
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.navigation.NavigationView
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -16,6 +17,7 @@ import com.tuan88291.mvvmpattern.data.local.model.Data
 import com.tuan88291.mvvmpattern.databinding.ActivityMainBinding
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import com.tuan88291.mvvmpattern.utils.observe.addTo
+import com.tuan88291.mvvmpattern.view.components.MenuType
 import com.tuan88291.mvvmpattern.view.fragment.chat.ChatFragment
 import com.tuan88291.mvvmpattern.view.fragment.homefragment.HomeFragment
 import io.reactivex.Observable
@@ -44,6 +46,25 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             it.navView.setNavigationItemSelectedListener(this)
             it.appBar.title.text = "Call API"
+        }
+        binding?.appBar?.contentMain?.bottomNavigation?.onChangeMenu = {
+            when(it) {
+                MenuType.home -> {
+                    addFragment(HomeFragment(), "Home")
+                }
+                MenuType.map -> {
+                    addFragment(ChatFragment(), "Chat")
+                }
+                MenuType.add -> {
+
+                }
+                MenuType.route -> {
+
+                }
+                MenuType.notification -> {
+
+                }
+            }
         }
         addFragment(HomeFragment(), "Home")
     }

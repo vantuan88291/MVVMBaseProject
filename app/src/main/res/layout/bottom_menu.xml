@@ -28,12 +28,14 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.tuan88291.mvvmpattern.view.components.ImageWrap
+                android:id="@+id/icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tint="@color/colorWhite"
                 android:src="@drawable/ic_menu_camera" />
 
             <com.tuan88291.mvvmpattern.view.components.TextViewWrap
+                android:id="@+id/label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorWhite"
@@ -52,15 +54,17 @@
             app:layout_constraintStart_toEndOf="@+id/linearLayout">
 
             <com.tuan88291.mvvmpattern.view.components.ImageWrap
+                android:id="@+id/icon1"
                 android:layout_width="wrap_content"
-                android:tint="@color/colorWhite"
+                android:tint="@color/colorGrey"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_menu_camera" />
 
             <com.tuan88291.mvvmpattern.view.components.TextViewWrap
+                android:id="@+id/label1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorGrey"
                 android:text="Home" />
         </LinearLayout>
 
@@ -104,15 +108,17 @@
             app:layout_constraintStart_toEndOf="@+id/linearLayout2">
 
             <com.tuan88291.mvvmpattern.view.components.ImageWrap
+                android:id="@+id/icon2"
                 android:layout_width="wrap_content"
-                android:tint="@color/colorWhite"
+                android:tint="@color/colorGrey"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_menu_camera" />
 
             <com.tuan88291.mvvmpattern.view.components.TextViewWrap
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorWhite"
+                android:id="@+id/label2"
+                android:textColor="@color/colorGrey"
                 android:text="Home" />
         </LinearLayout>
 
@@ -128,14 +134,16 @@
             app:layout_constraintStart_toEndOf="@+id/linearLayout3">
 
             <com.tuan88291.mvvmpattern.view.components.ImageWrap
+                android:id="@+id/icon3"
                 android:layout_width="wrap_content"
-                android:tint="@color/colorWhite"
+                android:tint="@color/colorGrey"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_menu_camera" />
 
             <com.tuan88291.mvvmpattern.view.components.TextViewWrap
+                android:id="@+id/label3"
                 android:layout_width="wrap_content"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/colorGrey"
                 android:layout_height="wrap_content"
                 android:text="Home" />
         </LinearLayout>
