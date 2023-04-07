@@ -48,6 +48,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         addFragment(HomeFragment(), "Home")
     }
 
+    fun setLoading(loading: Boolean) {
+        binding?.appBar?.contentMain?.loading?.visibility = if (loading) View.VISIBLE else View.GONE
+    }
+
     override fun onBackPressed() {
         if (binding?.drawerLayout!!.isDrawerOpen(GravityCompat.START)) {
             binding?.drawerLayout?.closeDrawer(GravityCompat.START)

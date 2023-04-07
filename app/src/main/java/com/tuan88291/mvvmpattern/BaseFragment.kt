@@ -16,7 +16,7 @@ abstract class BaseFragment : Fragment(), BaseView {
     }
 
     override fun setErrorParent(data: Any) {
-        AlertDialog.Builder(context!!)
+        AlertDialog.Builder(requireContext())
             .setTitle("Your Alert")
             .setMessage(data.toString())
             .setCancelable(false)
