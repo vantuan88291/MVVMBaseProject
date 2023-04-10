@@ -40,6 +40,10 @@ abstract class BaseFragment : Fragment(), BaseView {
         this.context = context as MainActivity?
     }
 
+    fun setLoading(isLoading: Boolean) {
+        mContext()?.setLoading(isLoading)
+    }
+
     protected abstract fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     protected abstract fun viewCreated(view: View, savedInstanceState: Bundle?)
     protected fun mContext(): MainActivity? {

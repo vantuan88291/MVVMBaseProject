@@ -73,7 +73,7 @@ class HomeFragment : BaseFragment() {
     private fun processData(state: State) {
         when (state) {
             is State.Failure -> error(state.message)
-            is State.Loading -> loading(state.loading)
+            is State.Loading -> setLoading(state.loading)
             is State.Success<*> -> setDataList(state.data as DataUser)
         }
     }
@@ -87,10 +87,6 @@ class HomeFragment : BaseFragment() {
             binding?.list?.setData(data.data!!)
         } catch (e: Exception) {
         }
-    }
-
-    private fun loading(isLoading: Boolean) {
-        mContext()?.setLoading(isLoading)
     }
 
     private fun error(msg: Any) {
