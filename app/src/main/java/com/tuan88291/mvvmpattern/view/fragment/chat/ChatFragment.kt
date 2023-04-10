@@ -2,9 +2,6 @@ package com.tuan88291.mvvmpattern.view.fragment.chat
 
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +12,7 @@ import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.model.DataChat
 import com.tuan88291.mvvmpattern.databinding.AboutFragmentBinding
 import com.tuan88291.mvvmpattern.utils.TextWatcherWrap
-import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
-import com.tuan88291.mvvmpattern.utils.observe.addTo
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Function
-import io.reactivex.schedulers.Schedulers
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.concurrent.TimeUnit
 
 
 class ChatFragment : BaseFragment() {
@@ -46,7 +36,7 @@ class ChatFragment : BaseFragment() {
         binding?.list?.setmId(Build.MODEL)
         chatViewModel.let {
             it.getTyping().observe(this, Observer { this.onTyping(it) })
-            it.getLoading().observe(this, Observer { this.loading(it) })
+            it.getLoading().observe(this, Observer { this.setLoading(it) })
             it.getDataChat().observe(this, Observer { this.processData(it) })
             it.getAllDataChat().observe(this, Observer { this.processAllData(it) })
         }
@@ -69,9 +59,6 @@ class ChatFragment : BaseFragment() {
     }
     private fun processAllData(data: MutableList<DataChat>) {
         binding?.list?.addAllData(data)
-    }
-    private fun loading(load: Boolean) {
-        binding?.loading?.visibility = if (load) View.VISIBLE else View.GONE
     }
     private fun onTyping(typings: String) {
         if (typings !== "") {

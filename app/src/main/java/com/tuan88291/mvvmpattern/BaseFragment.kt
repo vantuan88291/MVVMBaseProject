@@ -16,7 +16,7 @@ abstract class BaseFragment : Fragment(), BaseView {
     }
 
     override fun setErrorParent(data: Any) {
-        AlertDialog.Builder(context!!)
+        AlertDialog.Builder(requireContext())
             .setTitle("Your Alert")
             .setMessage(data.toString())
             .setCancelable(false)
@@ -38,6 +38,10 @@ abstract class BaseFragment : Fragment(), BaseView {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         this.context = context as MainActivity?
+    }
+
+    fun setLoading(isLoading: Boolean) {
+        mContext()?.setLoading(isLoading)
     }
 
     protected abstract fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
