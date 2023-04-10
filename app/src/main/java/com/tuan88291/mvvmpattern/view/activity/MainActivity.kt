@@ -1,19 +1,21 @@
 package com.tuan88291.mvvmpattern.view.activity
 
+import android.app.ActionBar.LayoutParams
 import android.os.Bundle
-import android.util.Log
-import com.google.android.material.navigation.NavigationView
-import androidx.core.view.GravityCompat
-import androidx.appcompat.app.ActionBarDrawerToggle
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.RelativeLayout
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
 import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import com.google.android.material.navigation.NavigationView
 import com.tuan88291.mvvmpattern.BaseActivity
 import com.tuan88291.mvvmpattern.R
-import com.tuan88291.mvvmpattern.data.local.model.Data
 import com.tuan88291.mvvmpattern.databinding.ActivityMainBinding
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import com.tuan88291.mvvmpattern.utils.observe.addTo
@@ -29,12 +31,19 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     var binding: ActivityMainBinding? = null
     private var autodis: AutoDisposable? =  null
-
+    private var paramsContent: RelativeLayout.LayoutParams? = null
+    private var marginBottomMenu: Int? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         autodis = AutoDisposable(this.lifecycle)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding?.appBar?.toolbar)
+        marginBottomMenu = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            59F,
+            this.resources.getDisplayMetrics()
+        ).toInt()
+        paramsContent = RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
         val toggle = ActionBarDrawerToggle(
             this, binding?.drawerLayout, binding?.appBar?.toolbar,
             R.string.navigation_drawer_open,
@@ -69,8 +78,26 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         addFragment(HomeFragment(), "Home")
     }
 
+    fun onStateBottomMenu(hide: Boolean) {
+        binding?.appBar?.contentMain?.bottomNavigation?.visibility = if (hide) View.GONE else View.VISIBLE
+        if (hide) {
+            paramsContent?.setMargins(0,0,0,0)
+        } else {
+            paramsContent?.setMargins(0,0,0, marginBottomMenu!!)
+        }
+        binding?.appBar?.contentMain?.contentHome?.layoutParams = paramsContent
+        if (hide) {
+            binding?.drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        } else {
+            binding?.drawerLayout?.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+        }
+    }
     fun setLoading(loading: Boolean) {
         binding?.appBar?.contentMain?.loading?.visibility = if (loading) View.VISIBLE else View.GONE
+    }
+
+    fun onNavigateToFragment(fragment: Fragment) {
+        this.navigateFragment(fragment, fragment.javaClass.canonicalName!!)
     }
 
     override fun onBackPressed() {

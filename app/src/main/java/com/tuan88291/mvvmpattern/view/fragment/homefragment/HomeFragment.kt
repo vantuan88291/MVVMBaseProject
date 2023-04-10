@@ -1,6 +1,7 @@
 package com.tuan88291.mvvmpattern.view.fragment.homefragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
 import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.databinding.HomeFragmentBinding
 import com.tuan88291.mvvmpattern.utils.SharedPrefs
+import com.tuan88291.mvvmpattern.view.fragment.detailfragment.DetailFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -42,7 +44,8 @@ class HomeFragment : BaseFragment() {
             .observe(this, Observer { this.processData(it) })
         binding?.apply {
             btn.setOnClickListener {
-                homeViewModel.insertDatabase(DataRoom("tuan", (0..10).random()))
+//                homeViewModel.insertDatabase(DataRoom("tuan", (0..10).random()))
+                navigate(DetailFragment())
             }
             list.onLoadmore = {
                 homeViewModel.loadData(false)

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.tuan88291.mvvmpattern.view.activity.MainActivity
 
-abstract class BaseFragment : Fragment(), BaseView {
+abstract class BaseChildFragment : Fragment(), BaseView {
     private var context: MainActivity? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +31,7 @@ abstract class BaseFragment : Fragment(), BaseView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mContext()?.onStateBottomMenu(true)
         viewCreated(view, savedInstanceState)
 
     }
@@ -40,6 +41,12 @@ abstract class BaseFragment : Fragment(), BaseView {
         this.context = context as MainActivity?
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (mContext()?.supportFragmentManager?.fragments?.size!! <= 1) {
+            mContext()?.onStateBottomMenu(false)
+        }
+    }
     fun navigate(fragment: Fragment) {
         mContext()?.onNavigateToFragment(fragment)
     }

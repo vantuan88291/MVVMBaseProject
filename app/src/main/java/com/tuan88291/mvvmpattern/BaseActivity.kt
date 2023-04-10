@@ -27,13 +27,29 @@ open class BaseActivity : AppCompatActivity(), BaseView {
                 val fragmentTag = supportFragmentManager.findFragmentByTag(tag)
 
                 if (fragmentTag == null) {
-                    val ft = supportFragmentManager.beginTransaction()
-//                    ft.setCustomAnimations(
-//                        android.R.anim.fade_in,
-//                        android.R.anim.fade_out
-//                    )
-                    ft.replace(R.id.contentHome, fragment, tag)
-                    ft.commit()
+                     supportFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.contentHome, fragment, tag)
+                        .commit()
+                }
+            } catch (e: Exception) {
+
+            }
+        }
+    }
+
+    protected fun navigateFragment(fragment: Fragment?, tag: String) {
+        if (fragment != null) {
+            try {
+                val fragmentTag = supportFragmentManager.findFragmentByTag(tag)
+
+                if (fragmentTag == null) {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left, R.anim.slide_in_right, R.anim.slide_out_right)
+                        .add(R.id.contentHome, fragment, tag)
+                        .addToBackStack(fragment.javaClass.canonicalName)
+                        .commitAllowingStateLoss()
                 }
             } catch (e: Exception) {
 
