@@ -44,7 +44,9 @@ class HomeFragment : BaseFragment() {
             .observe(this, Observer { this.processData(it) })
         binding?.apply {
             btn.setOnClickListener {
-//                homeViewModel.insertDatabase(DataRoom("tuan", (0..10).random()))
+                homeViewModel.insertDatabase(DataRoom("tuan", (0..10).random()))
+            }
+            button3.setOnClickListener {
                 navigate(DetailFragment())
             }
             list.onLoadmore = {
