@@ -3,6 +3,7 @@ package com.tuan88291.mvvmpattern
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.tuan88291.mvvmpattern.utils.Utils
 
 open class BaseActivity : AppCompatActivity(), BaseView {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +38,9 @@ open class BaseActivity : AppCompatActivity(), BaseView {
             }
         }
     }
-
+    protected fun popBackStack() {
+        Utils.backFragment(this)
+    }
     protected fun navigateFragment(fragment: Fragment?, tag: String) {
         if (fragment != null) {
             try {

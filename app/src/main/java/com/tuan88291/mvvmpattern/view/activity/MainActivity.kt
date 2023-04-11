@@ -80,6 +80,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     fun onStateBottomMenu(hide: Boolean) {
         binding?.appBar?.contentMain?.bottomNavigation?.visibility = if (hide) View.GONE else View.VISIBLE
+        binding?.appBar?.toolbar?.visibility = if (hide) View.GONE else View.VISIBLE
         if (hide) {
             paramsContent?.setMargins(0,0,0,0)
         } else {
