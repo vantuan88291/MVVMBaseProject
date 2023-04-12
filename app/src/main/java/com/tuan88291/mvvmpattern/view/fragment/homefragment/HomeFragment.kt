@@ -13,17 +13,20 @@ import com.tuan88291.mvvmpattern.BaseFragment
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.State
 import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
+import com.tuan88291.mvvmpattern.data.local.model.DataProfile
 import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.databinding.HomeFragmentBinding
 import com.tuan88291.mvvmpattern.utils.SharedPrefs
 import com.tuan88291.mvvmpattern.view.fragment.detailfragment.DetailFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment() {
     private val homeViewModel: HomeViewModel by viewModel()
     private var binding: HomeFragmentBinding? = null
+    private val profile: DataProfile by inject()
     override fun setView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,6 +48,7 @@ class HomeFragment : BaseFragment() {
         binding?.apply {
             btn.setOnClickListener {
                 homeViewModel.insertDatabase(DataRoom("tuan", (0..10).random()))
+                profile.setData("tuan123", "abc")
             }
             button3.setOnClickListener {
                 navigate(DetailFragment())

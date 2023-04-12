@@ -23,11 +23,12 @@
                 android:layout_marginTop="16dp"
                 android:text="Navigate" />
 
-            <com.tuan88291.mvvmpattern.view.components.ImageWrap
+            <com.tuan88291.mvvmpattern.view.components.TextViewWrap
+                android:id="@+id/text"
                 android:layout_width="wrap_content"
+                android:textColor="@color/colorWhite"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_menu_camera" />
+                android:layout_centerInParent="true"/>
 
         </RelativeLayout>
     </com.tuan88291.mvvmpattern.view.components.Screen>
