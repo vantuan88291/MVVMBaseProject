@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.tuan88291.mvvmpattern.utils.Utils
+import com.tuan88291.mvvmpattern.view.fragment.BaseView
 
 open class BaseActivity : AppCompatActivity(), BaseView {
     override fun onCreate(savedInstanceState: Bundle?) {

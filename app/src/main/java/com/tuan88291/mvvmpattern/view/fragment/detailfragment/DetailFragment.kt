@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import com.tuan88291.mvvmpattern.BaseChildFragment
+import com.tuan88291.mvvmpattern.view.fragment.BaseChildFragment
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.model.DataProfile
 import com.tuan88291.mvvmpattern.databinding.DetailFragmentBinding

@@ -1,4 +1,4 @@
-package com.tuan88291.mvvmpattern
+package com.tuan88291.mvvmpattern.view.fragment
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

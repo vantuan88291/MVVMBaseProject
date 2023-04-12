@@ -1,28 +1,17 @@
-package com.tuan88291.mvvmpattern
+package com.tuan88291.mvvmpattern.view.fragment
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import com.tuan88291.mvvmpattern.view.activity.MainActivity
+import com.tuan88291.mvvmpattern.view.activity.GuestActivity
 
-abstract class BaseFragment : Fragment(), BaseView {
-    private var context: MainActivity? = null
+abstract class BaseGuestFragment : Fragment() {
+    private var context: GuestActivity? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    }
-
-    override fun setErrorParent(data: Any) {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Your Alert")
-            .setMessage(data.toString())
-            .setCancelable(false)
-            .setPositiveButton("ok") { dialog, which ->
-
-            }.show()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -37,20 +26,12 @@ abstract class BaseFragment : Fragment(), BaseView {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        this.context = context as MainActivity?
-    }
-
-    fun navigate(fragment: Fragment) {
-        mContext()?.onNavigateToFragment(fragment)
-    }
-    fun setLoading(isLoading: Boolean) {
-        mContext()?.setLoading(isLoading)
+        this.context = context as GuestActivity?
     }
 
     protected abstract fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     protected abstract fun viewCreated(view: View, savedInstanceState: Bundle?)
-    protected fun mContext(): MainActivity? {
+    protected fun mContext(): GuestActivity? {
         return this.context
     }
-
 }

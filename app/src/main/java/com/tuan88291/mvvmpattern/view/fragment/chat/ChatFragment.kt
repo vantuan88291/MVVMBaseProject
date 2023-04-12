@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import com.tuan88291.mvvmpattern.BaseFragment
+import com.tuan88291.mvvmpattern.view.fragment.BaseFragment
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.model.DataChat
 import com.tuan88291.mvvmpattern.databinding.AboutFragmentBinding

@@ -1,7 +1,6 @@
 package com.tuan88291.mvvmpattern.view.fragment.homefragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +8,9 @@ import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import com.tuan88291.mvvmpattern.BaseFragment
+import com.tuan88291.mvvmpattern.view.fragment.BaseFragment
 import com.tuan88291.mvvmpattern.R
-import com.tuan88291.mvvmpattern.State
+import com.tuan88291.mvvmpattern.view.fragment.State
 import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
 import com.tuan88291.mvvmpattern.data.local.model.DataProfile
 import com.tuan88291.mvvmpattern.data.local.model.DataUser

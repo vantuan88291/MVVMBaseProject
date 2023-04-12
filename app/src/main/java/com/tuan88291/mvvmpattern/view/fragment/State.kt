@@ -1,4 +1,4 @@
-package com.tuan88291.mvvmpattern
+package com.tuan88291.mvvmpattern.view.fragment
 
 
 sealed class State {

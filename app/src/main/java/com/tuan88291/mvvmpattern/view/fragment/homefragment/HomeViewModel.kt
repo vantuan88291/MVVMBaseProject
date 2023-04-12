@@ -7,12 +7,11 @@ import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.data.remote.ApiGenerator
 import com.tuan88291.mvvmpattern.data.remote.customcallback.BaseRetrofit
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
-import com.tuan88291.mvvmpattern.BaseViewModel
-import com.tuan88291.mvvmpattern.State
+import com.tuan88291.mvvmpattern.view.fragment.BaseViewModel
+import com.tuan88291.mvvmpattern.view.fragment.State
 import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
 import com.tuan88291.mvvmpattern.data.local.room.livedata.DBmodel
 import com.tuan88291.mvvmpattern.view.adapter.AdapterStateLoad
-import kotlin.math.log
 
 class HomeViewModel(api: ApiGenerator, val db: DBmodel): BaseViewModel(api) {
     private val stateAdapter: MutableLiveData<AdapterStateLoad> by lazy { MutableLiveData<AdapterStateLoad>() }
