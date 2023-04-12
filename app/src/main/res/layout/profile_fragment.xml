@@ -3,16 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data></data>
-
+<com.tuan88291.mvvmpattern.view.components.Screen
+    android:layout_width="match_parent"
+    app:title="profile screen"
+    app:leftIcon="@drawable/back_ios_24"
+    android:layout_height="match_parent">
     <RelativeLayout
-        android:background="@color/colorPrimary"
+        android:background="@color/colorGrey"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.tuan88291.mvvmpattern.view.components.Header
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            app:title="Profile screen"
-            android:layout_height="wrap_content" />
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
@@ -21,4 +20,5 @@
             android:text="Profile"
             />
     </RelativeLayout>
+</com.tuan88291.mvvmpattern.view.components.Screen>
 </layout>

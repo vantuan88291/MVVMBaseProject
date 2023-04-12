@@ -5,32 +5,30 @@
 
     <data></data>
 
-    <RelativeLayout
+    <com.tuan88291.mvvmpattern.view.components.Screen
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorAccent">
+        android:background="@color/colorAccent"
+        app:title="detail screen">
 
-        <com.tuan88291.mvvmpattern.view.components.Header
-            android:id="@+id/header"
+        <RelativeLayout
             android:layout_width="match_parent"
-            app:title="detail screen"
-            app:leftIcon="@drawable/back_ios_24"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="detail" />
+            <com.tuan88291.mvvmpattern.view.components.ButtonWrap
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="Navigate" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView2"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="Navigate" />
-    </RelativeLayout>
+            <com.tuan88291.mvvmpattern.view.components.ImageWrap
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_menu_camera" />
+
+        </RelativeLayout>
+    </com.tuan88291.mvvmpattern.view.components.Screen>
 </layout>
