@@ -30,7 +30,8 @@ ext.lib = [
         multidex     : '2.0.1',
         extensions   : '1.1.1',
         sdp          : '1.0.6',
-        recycler_view: '1.2.1'
+        recycler_view: '1.2.1',
+        splash: '1.0.0-beta02'
 ]
 ext.deps = [
         gradle_plugins: [
@@ -78,6 +79,7 @@ ext.deps = [
                 databinding: "com.android.databinding:compiler:$arch.binding_compiler",
                 sdp: "com.intuit.sdp:sdp-android:$lib.sdp",
                 recycler_view: "androidx.recyclerview:recyclerview:$lib.recycler_view",
+                splash: "androidx.core:core-splashscreen:$lib.splash",
         ],
 
         test: [

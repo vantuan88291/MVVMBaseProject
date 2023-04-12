@@ -2,12 +2,16 @@ package com.tuan88291.mvvmpattern.view.activity
 
 import android.app.ActionBar.LayoutParams
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.splashscreen.SplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
@@ -33,8 +37,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private var autodis: AutoDisposable? =  null
     private var paramsContent: RelativeLayout.LayoutParams? = null
     private var marginBottomMenu: Int? = null
+    private var keep = true
     override fun onCreate(savedInstanceState: Bundle?) {
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+        splashScreen.setKeepOnScreenCondition{keep}
+        Handler(Looper.getMainLooper()).postDelayed({
+            keep = false
+        }, 5000)
         autodis = AutoDisposable(this.lifecycle)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding?.appBar?.toolbar)
