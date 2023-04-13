@@ -13,7 +13,7 @@ class SharedPrefs private constructor() {
         App.applicationContext().getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
     }
 
-    fun <T> get(key: String, anonymousClass: Class<T>): Observable<T> {
+    fun <T> getObserve(key: String, anonymousClass: Class<T>): Observable<T> {
         return Observable.create { emitter ->
             val sharedPreferencesListener =
                 SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
@@ -42,6 +42,17 @@ class SharedPrefs private constructor() {
         }
     }
 
+    fun <T> get(key: String, anonymousClass: Class<T>) : T {
+        return when (anonymousClass) {
+            String::class.java -> mSharedPreferences.getString(key, "") as T
+            Boolean::class.java -> mSharedPreferences.getBoolean(key, false) as T
+            Float::class.java -> mSharedPreferences.getFloat(key, 0f) as T
+            Int::class.java -> mSharedPreferences.getInt(key, 0) as T
+            Long::class.java -> mSharedPreferences.getLong(key, 0) as T
+            else -> App.getGson().fromJson(mSharedPreferences.getString(key, ""), anonymousClass)
+        }
+    }
+
     fun <T> put(key: String, data: T) {
         val editor = mSharedPreferences.edit()
         when (data) {
@@ -53,6 +64,9 @@ class SharedPrefs private constructor() {
             else -> editor.putString(key, App.getGson().toJson(data))
         }
         editor.apply()
+    }
+    fun removeByKey(key: String) {
+        mSharedPreferences.edit().remove(key).apply()
     }
     fun clear() {
         mSharedPreferences.edit().clear().apply()

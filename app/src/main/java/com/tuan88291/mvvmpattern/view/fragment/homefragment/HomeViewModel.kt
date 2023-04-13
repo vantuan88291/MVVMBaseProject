@@ -13,7 +13,7 @@ import com.tuan88291.mvvmpattern.data.local.entity.DataRoom
 import com.tuan88291.mvvmpattern.data.local.room.livedata.DBmodel
 import com.tuan88291.mvvmpattern.view.adapter.AdapterStateLoad
 
-class HomeViewModel(api: ApiGenerator, val db: DBmodel): BaseViewModel(api) {
+class HomeViewModel(api: ApiGenerator, val db: DBmodel): BaseViewModel(api, false) {
     private val stateAdapter: MutableLiveData<AdapterStateLoad> by lazy { MutableLiveData<AdapterStateLoad>() }
     private val autodis = AutoDisposable(null)
     private var page: Int = 0
@@ -26,7 +26,6 @@ class HomeViewModel(api: ApiGenerator, val db: DBmodel): BaseViewModel(api) {
         db.insertData(item)
     }
     fun getData(): MutableLiveData<State>{
-        Log.d("TAG", "getData: ")
         return this.state
     }
     fun getStateLoadAdapter(): MutableLiveData<AdapterStateLoad>{

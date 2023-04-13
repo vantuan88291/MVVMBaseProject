@@ -59,7 +59,7 @@ class HomeFragment : BaseFragment() {
                 SharedPrefs.instance?.put("num", (0..10).random())
             }
         }
-        disposable = SharedPrefs.instance?.get("num", Int::class.java)
+        disposable = SharedPrefs.instance?.getObserve("num", Int::class.java)
             ?.observeOn(AndroidSchedulers.mainThread())?.subscribe {
             binding?.button?.text = it.toString()
         }

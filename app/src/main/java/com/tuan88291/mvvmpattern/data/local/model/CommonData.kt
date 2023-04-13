@@ -7,7 +7,7 @@ class CommonData<T: Any> {
     @SerializedName("data")
     @Expose
     var data: T? = null
-    @SerializedName("status_code")
+    @SerializedName("code")
     @Expose
     var code: Int = 0
     @SerializedName("message")

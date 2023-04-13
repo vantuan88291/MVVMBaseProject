@@ -6,7 +6,7 @@ import com.tuan88291.mvvmpattern.data.remote.ApiGenerator
 import com.tuan88291.mvvmpattern.data.remote.BaseInteractor
 import com.tuan88291.mvvmpattern.data.remote.CallApi
 
-open class BaseViewModel(api: ApiGenerator): ViewModel(), BaseInteractor {
-    override val callAPi: CallApi = api.createApi()
+open class BaseViewModel(api: ApiGenerator, token: Boolean): ViewModel(), BaseInteractor {
+    override val callAPi: CallApi = api.processCreateApi(token)
     val state: MutableLiveData<State> by lazy { MutableLiveData<State>() }
 }

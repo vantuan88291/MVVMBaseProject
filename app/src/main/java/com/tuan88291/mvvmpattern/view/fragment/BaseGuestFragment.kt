@@ -34,4 +34,7 @@ abstract class BaseGuestFragment : Fragment() {
     protected fun mContext(): GuestActivity? {
         return this.context
     }
+    fun setLoading(isLoading: Boolean) {
+        mContext()?.setLoading(isLoading)
+    }
 }

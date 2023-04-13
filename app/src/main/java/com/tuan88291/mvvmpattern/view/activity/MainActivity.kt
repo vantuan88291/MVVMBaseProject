@@ -1,17 +1,14 @@
 package com.tuan88291.mvvmpattern.view.activity
 
 import android.app.ActionBar.LayoutParams
+import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.core.splashscreen.SplashScreen
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
@@ -21,10 +18,13 @@ import com.google.android.material.navigation.NavigationView
 import com.tuan88291.mvvmpattern.BaseActivity
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.databinding.ActivityMainBinding
+import com.tuan88291.mvvmpattern.utils.Common
+import com.tuan88291.mvvmpattern.utils.SharedPrefs
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import com.tuan88291.mvvmpattern.utils.observe.addTo
 import com.tuan88291.mvvmpattern.view.components.MenuType
 import com.tuan88291.mvvmpattern.view.fragment.chat.ChatFragment
+import com.tuan88291.mvvmpattern.view.fragment.detailfragment.DetailFragment
 import com.tuan88291.mvvmpattern.view.fragment.homefragment.HomeFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -39,12 +39,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private var marginBottomMenu: Int? = null
     private var keep = true
     override fun onCreate(savedInstanceState: Bundle?) {
-        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
-        splashScreen.setKeepOnScreenCondition{keep}
-        Handler(Looper.getMainLooper()).postDelayed({
-            keep = false
-        }, 5000)
         autodis = AutoDisposable(this.lifecycle)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding?.appBar?.toolbar)
@@ -175,7 +170,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             }
             R.id.nav_send -> {
-
+                SharedPrefs.instance?.removeByKey(Common.TOKEN)
+                val intent = Intent(this, GuestActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME
+                startActivity(intent)
+                finish()
             }
         }
 
