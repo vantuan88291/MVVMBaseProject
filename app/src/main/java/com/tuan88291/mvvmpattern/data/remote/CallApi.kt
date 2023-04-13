@@ -5,6 +5,7 @@ import com.tuan88291.mvvmpattern.data.local.model.CommonData
 import com.tuan88291.mvvmpattern.data.local.model.DataUser
 import com.tuan88291.mvvmpattern.data.local.model.login.DataLogin
 import com.tuan88291.mvvmpattern.data.local.model.login.ParamLogin
+import com.tuan88291.mvvmpattern.data.local.model.user.DataProfile
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,4 +19,6 @@ interface CallApi {
 
     @POST("auth/login")
     fun login(@Body params: ParamLogin): Observable<CommonData<DataLogin>>
+    @GET("auth/user-profile")
+    fun getProfile(): Observable<CommonData<DataProfile>>
 }

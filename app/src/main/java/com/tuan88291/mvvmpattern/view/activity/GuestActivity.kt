@@ -2,9 +2,8 @@ package com.tuan88291.mvvmpattern.view.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
+import android.widget.Toast
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.databinding.DataBindingUtil
 import com.tuan88291.mvvmpattern.BaseActivity
@@ -12,13 +11,16 @@ import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.databinding.ActivityGuestBinding
 import com.tuan88291.mvvmpattern.utils.Common
 import com.tuan88291.mvvmpattern.utils.SharedPrefs
+import com.tuan88291.mvvmpattern.view.fragment.State
 import com.tuan88291.mvvmpattern.view.fragment.login.LoginFragment
+import com.tuan88291.mvvmpattern.view.fragment.login.LoginViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class GuestActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGuestBinding
-
+    private val loginViewModel: LoginViewModel by viewModel()
     private var keep = true
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -28,10 +30,26 @@ class GuestActivity : BaseActivity() {
         if (token == null || token.equals("")) {
             keep = false
         } else {
-            navigateTomain()
+            loginViewModel
+                .getProfile()
+                .getData()
+                .observe(this, {onProfileProcess(it)})
         }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_guest)
         addFragment(LoginFragment(), "login")
+    }
+
+    private fun onProfileProcess(state: State) {
+        when (state) {
+            is State.Failure -> {
+                Toast.makeText(this, state.message, Toast.LENGTH_LONG).show()
+                keep = false
+            }
+            is State.Loading -> {}
+            is State.Success<*> -> {
+                navigateTomain()
+            }
+        }
     }
 
     fun setLoading(loading: Boolean) {

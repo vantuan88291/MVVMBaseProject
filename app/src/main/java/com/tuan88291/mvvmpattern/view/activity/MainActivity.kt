@@ -3,6 +3,7 @@ package com.tuan88291.mvvmpattern.view.activity
 import android.app.ActionBar.LayoutParams
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
@@ -17,7 +18,10 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.tuan88291.mvvmpattern.BaseActivity
 import com.tuan88291.mvvmpattern.R
+import com.tuan88291.mvvmpattern.data.local.model.GlobalData
+import com.tuan88291.mvvmpattern.data.local.model.user.DataProfile
 import com.tuan88291.mvvmpattern.databinding.ActivityMainBinding
+import com.tuan88291.mvvmpattern.databinding.NavHeaderMainBinding
 import com.tuan88291.mvvmpattern.utils.Common
 import com.tuan88291.mvvmpattern.utils.SharedPrefs
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
@@ -29,6 +33,8 @@ import com.tuan88291.mvvmpattern.view.fragment.homefragment.HomeFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import org.koin.android.ext.android.inject
+import org.koin.core.inject
 import java.util.concurrent.TimeUnit
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -37,11 +43,13 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private var autodis: AutoDisposable? =  null
     private var paramsContent: RelativeLayout.LayoutParams? = null
     private var marginBottomMenu: Int? = null
-    private var keep = true
+    private val profile: GlobalData by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         autodis = AutoDisposable(this.lifecycle)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        val headerNav = NavHeaderMainBinding.bind(binding?.navView?.getHeaderView(0)!!)
         setSupportActionBar(binding?.appBar?.toolbar)
         marginBottomMenu = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
@@ -81,6 +89,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
         }
         addFragment(HomeFragment(), "Home")
+        profile.getUser().observe(this, {headerNav.dataProfile = it})
+
     }
 
     fun onStateBottomMenu(hide: Boolean) {
