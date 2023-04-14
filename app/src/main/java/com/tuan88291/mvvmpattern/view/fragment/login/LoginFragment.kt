@@ -27,10 +27,7 @@ class LoginFragment: BaseGuestFragment() {
     }
 
     override fun viewCreated(view: View, savedInstanceState: Bundle?) {
-        binding?.params = loginViewModel.getParam()
-        binding?.login?.setOnClickListener {
-            loginViewModel.onLogin()
-        }
+        binding?.loginViewModel = loginViewModel
         loginViewModel.getData().observe(this, {onLoginProcess(it)})
     }
     private fun onLoginProcess(state: State) {

@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="params"
-            type="com.tuan88291.mvvmpattern.data.local.model.login.ParamLogin" />
+            name="loginViewModel"
+            type="com.tuan88291.mvvmpattern.view.fragment.login.LoginViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
@@ -24,8 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="96dp"
             android:hint="@string/prompt_email"
-            android:text="@{params.email}"
-            android:onTextChanged="@{params.onChangeUserName}"
+            android:text="@{loginViewModel.param.email}"
+            android:onTextChanged="@{loginViewModel.param.onChangeUserName}"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,8 +35,8 @@
         <com.tuan88291.mvvmpattern.view.components.EditTextWrap
             android:id="@+id/password"
             android:layout_width="0dp"
-            android:text="@{params.password}"
-            android:onTextChanged="@{params.onChangePass}"
+            android:text="@{loginViewModel.param.password}"
+            android:onTextChanged="@{loginViewModel.param.onChangePass}"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:hint="@string/prompt_password"
@@ -55,7 +55,8 @@
             android:layout_gravity="start"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="64dp"
-            android:enabled="@{params.email.length() > 5 &amp;&amp; params.password.length() > 5 ? true : false}"
+            android:onClick="@{() -> loginViewModel.onLogin()}"
+            android:enabled="@{loginViewModel.param.email.length() > 5 &amp;&amp; loginViewModel.param.password.length() > 5 ? true : false}"
             android:text="@string/action_sign_in"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
