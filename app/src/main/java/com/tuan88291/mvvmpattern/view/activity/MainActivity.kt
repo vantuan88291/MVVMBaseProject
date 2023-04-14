@@ -3,7 +3,6 @@ package com.tuan88291.mvvmpattern.view.activity
 import android.app.ActionBar.LayoutParams
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
@@ -19,7 +18,6 @@ import com.google.android.material.navigation.NavigationView
 import com.tuan88291.mvvmpattern.BaseActivity
 import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.model.GlobalData
-import com.tuan88291.mvvmpattern.data.local.model.user.DataProfile
 import com.tuan88291.mvvmpattern.databinding.ActivityMainBinding
 import com.tuan88291.mvvmpattern.databinding.NavHeaderMainBinding
 import com.tuan88291.mvvmpattern.utils.Common
@@ -28,13 +26,11 @@ import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import com.tuan88291.mvvmpattern.utils.observe.addTo
 import com.tuan88291.mvvmpattern.view.components.MenuType
 import com.tuan88291.mvvmpattern.view.fragment.chat.ChatFragment
-import com.tuan88291.mvvmpattern.view.fragment.detailfragment.DetailFragment
 import com.tuan88291.mvvmpattern.view.fragment.homefragment.HomeFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.koin.android.ext.android.inject
-import org.koin.core.inject
 import java.util.concurrent.TimeUnit
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {

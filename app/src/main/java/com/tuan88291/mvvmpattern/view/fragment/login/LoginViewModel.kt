@@ -1,7 +1,6 @@
 package com.tuan88291.mvvmpattern.view.fragment.login
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.tuan88291.mvvmpattern.data.local.model.CommonData
 import com.tuan88291.mvvmpattern.data.local.model.GlobalData
 import com.tuan88291.mvvmpattern.data.local.model.login.DataLogin
@@ -20,13 +19,9 @@ import org.koin.core.inject
 class LoginViewModel(val api: ApiGenerator): BaseViewModel(api, true), KoinComponent {
     private val profile: GlobalData by inject()
 
-    val params: MutableLiveData<ParamLogin> by lazy { MutableLiveData<ParamLogin>() }
+    val params: ParamLogin by lazy { ParamLogin() }
 
-    fun onSetValue(name: String, pass: String) {
-        params.value = ParamLogin(email = name, password = pass)
-    }
-
-    fun getParam(): LiveData<ParamLogin> {
+    fun getParam(): ParamLogin {
         return this.params
     }
 
@@ -35,18 +30,17 @@ class LoginViewModel(val api: ApiGenerator): BaseViewModel(api, true), KoinCompo
     }
 
     fun onLogin() {
-        object : BaseRetrofit<CommonData<DataLogin>>(callAPi.login(params.value!!)) {
+        object : BaseRetrofit<CommonData<DataLogin>>(callAPi.login(params)) {
             override fun onFail(err: String) {
                 state.value = State.Failure(err)
             }
 
             override fun onGetApiComplete(t: CommonData<DataLogin>) {
                 SharedPrefs.instance?.put(Common.TOKEN, t.data?.accessToken)
-
+                state.value = State.Success(t.data)
                 //update token
                 callAPi = api.createTokenApi()
                 getProfile()
-                state.value = State.Success(t)
             }
 
             override fun getDispose(): AutoDisposable? {
