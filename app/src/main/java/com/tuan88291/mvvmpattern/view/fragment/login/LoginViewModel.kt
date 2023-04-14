@@ -13,8 +13,8 @@ import com.tuan88291.mvvmpattern.utils.SharedPrefs
 import com.tuan88291.mvvmpattern.utils.observe.AutoDisposable
 import com.tuan88291.mvvmpattern.view.fragment.BaseViewModel
 import com.tuan88291.mvvmpattern.view.fragment.State
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class LoginViewModel(val api: ApiGenerator): BaseViewModel(api, true), KoinComponent {
     private val profile: GlobalData by inject()

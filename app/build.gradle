@@ -69,8 +69,6 @@ dependencies {
     implementation deps.resful.gson
     kapt deps.support.databinding
     implementation deps.di.koin
-    implementation deps.di.koin_androix
-    implementation deps.di.koin_viewmodel
     implementation deps.support.recycler_view
     implementation deps.support.splash
     implementation (deps.resful.socket){
