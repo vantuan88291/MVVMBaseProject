@@ -29,5 +29,7 @@ val mvvmModule = module {
 val RetrofitModule = module {
     single<iServiceApi> { ServiceApi() }
     single { ApiGenerator(get()) }
+}
+val GlobalModule = module {
     single { GlobalData() }
 }

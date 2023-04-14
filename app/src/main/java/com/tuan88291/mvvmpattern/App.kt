@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.google.gson.Gson
+import com.tuan88291.mvvmpattern.di.GlobalModule
 import com.tuan88291.mvvmpattern.di.RetrofitModule
 import com.tuan88291.mvvmpattern.di.dbModule
 import com.tuan88291.mvvmpattern.di.mvvmModule
@@ -25,7 +26,7 @@ class App : MultiDexApplication() {
             androidLogger(Level.DEBUG)
             androidContext(this@App)
             androidFileProperties()
-            modules(listOf(dbModule, mvvmModule, RetrofitModule))
+            modules(listOf(dbModule, mvvmModule, RetrofitModule, GlobalModule))
         }
     }
 
