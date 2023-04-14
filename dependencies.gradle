@@ -1,6 +1,6 @@
 ext.versions = [
         min_sdk             : 21,
-        compile_sdk         : 32,
+        compile_sdk         : 33,
         publish_version     : "1.0",
         publish_version_code: 1,
         package             : "com.tuan88291.mvvmpattern",
@@ -8,7 +8,7 @@ ext.versions = [
         build               : '7.4.0'
 ]
 ext.arch = [
-        koin            : '2.0.1',
+        koin            : '3.4.0',
         room            : '2.4.3',
         lifecycler      : '2.4.1',
         appcompat       : '1.5.1',
@@ -39,9 +39,7 @@ ext.deps = [
         ],
 
         di: [
-                koin: "io.insert-koin:koin-android:$arch.koin",
-                koin_androix: "io.insert-koin:koin-androidx-scope:$arch.koin",
-                koin_viewmodel: "io.insert-koin:koin-androidx-viewmodel:$arch.koin"
+                koin: "io.insert-koin:koin-android:$arch.koin"
         ],
         resful: [
                 gson: "com.google.code.gson:gson:$lib.gson",
