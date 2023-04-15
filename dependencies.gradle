@@ -31,7 +31,8 @@ ext.lib = [
         extensions   : '1.1.1',
         sdp          : '1.0.6',
         recycler_view: '1.2.1',
-        splash: '1.0.0-beta02'
+        splash: '1.0.0-beta02',
+        glide: '4.15.1'
 ]
 ext.deps = [
         gradle_plugins: [
@@ -78,6 +79,7 @@ ext.deps = [
                 sdp: "com.intuit.sdp:sdp-android:$lib.sdp",
                 recycler_view: "androidx.recyclerview:recyclerview:$lib.recycler_view",
                 splash: "androidx.core:core-splashscreen:$lib.splash",
+                glide: "com.github.bumptech.glide:glide:$lib.glide",
         ],
 
         test: [

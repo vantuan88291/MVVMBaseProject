@@ -8,62 +8,59 @@
             name="loginViewModel"
             type="com.tuan88291.mvvmpattern.view.fragment.login.LoginViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingHorizontal="@dimen/_5sdp"
+        android:orientation="vertical"
         tools:context=".view.activity.ui.login.GuestActivity">
 
         <com.tuan88291.mvvmpattern.view.components.EditTextWrap
             android:id="@+id/username"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="96dp"
             android:hint="@string/prompt_email"
             android:text="@{loginViewModel.param.email}"
             android:onTextChanged="@{loginViewModel.param.onChangeUserName}"
             android:inputType="textEmailAddress"
-            android:selectAllOnFocus="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:selectAllOnFocus="true" />
+        <com.tuan88291.mvvmpattern.view.components.TextViewWrap
+            android:layout_width="match_parent"
+            android:textColor="@color/colorAccent"
+            android:text="@{loginViewModel.param.email != null ? loginViewModel.getUsernameError(loginViewModel.param.email) : ``}"
+            android:layout_height="wrap_content"/>
 
         <com.tuan88291.mvvmpattern.view.components.EditTextWrap
             android:id="@+id/password"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:text="@{loginViewModel.param.password}"
             android:onTextChanged="@{loginViewModel.param.onChangePass}"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:hint="@string/prompt_password"
             android:imeActionLabel="@string/action_sign_in_short"
             android:imeOptions="actionDone"
             android:inputType="textPassword"
-            android:selectAllOnFocus="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username" />
+            android:selectAllOnFocus="true" />
+
+        <com.tuan88291.mvvmpattern.view.components.TextViewWrap
+            android:layout_width="match_parent"
+            android:textColor="@color/colorAccent"
+            android:text="@{loginViewModel.param.password != null ? loginViewModel.getPassError(loginViewModel.param.password) : ``}"
+            android:layout_height="wrap_content"/>
 
         <com.tuan88291.mvvmpattern.view.components.ButtonWrap
             android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="64dp"
             android:onClick="@{() -> loginViewModel.onLogin()}"
             android:enabled="@{loginViewModel.param.email.length() > 5 &amp;&amp; loginViewModel.param.password.length() > 5 ? true : false}"
-            android:text="@string/action_sign_in"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/password"
-            app:layout_constraintVertical_bias="0.2" />
+            android:text="@string/action_sign_in" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

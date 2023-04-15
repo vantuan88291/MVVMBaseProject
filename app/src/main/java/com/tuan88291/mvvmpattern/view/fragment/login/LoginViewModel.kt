@@ -1,6 +1,10 @@
 package com.tuan88291.mvvmpattern.view.fragment.login
 
+import android.util.Log
+import android.util.Patterns
 import androidx.lifecycle.LiveData
+import com.tuan88291.mvvmpattern.App
+import com.tuan88291.mvvmpattern.R
 import com.tuan88291.mvvmpattern.data.local.model.CommonData
 import com.tuan88291.mvvmpattern.data.local.model.GlobalData
 import com.tuan88291.mvvmpattern.data.local.model.login.DataLogin
@@ -76,5 +80,19 @@ class LoginViewModel(val api: ApiGenerator): BaseViewModel(api, true), KoinCompo
             }
         }
         return this
+    }
+
+    fun getUsernameError(email: String): String {
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            return App.applicationContext().getString(R.string.error_invalid_email)
+        }
+        return ""
+    }
+
+    fun getPassError(pass: String): String {
+        if (pass.length < 6) {
+            return App.applicationContext().getString(R.string.error_invalid_password)
+        }
+        return ""
     }
 }
