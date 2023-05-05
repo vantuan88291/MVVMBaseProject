@@ -49,6 +49,7 @@ class ServiceApi: iServiceApi {
 
     override fun <S> createServiceToken(serviceClass: Class<S>): S {
         val token = SharedPrefs.instance?.get(Common.TOKEN, String::class.java)
+        httpClient.interceptors().clear()
         httpClient.apply {
             readTimeout(3, TimeUnit.MINUTES)
             connectTimeout(3, TimeUnit.MINUTES)

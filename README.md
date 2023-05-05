@@ -4,6 +4,10 @@ Library: DI with koin, RXjava, room, mvvm, Rx retrofit
 
 This app has a small example about chat with socket io using MVVM
 
+## Example Login app:
+The example the provide login function, authencation flow, databinding refer to this branch: https://github.com/vantuan88291/MVVMBaseProject/tree/task/login
+
+
 ## Coroutine:
 
 Call api with coroutine visit to branch: https://github.com/vantuan88291/MVVMBaseProject/tree/coroutine
