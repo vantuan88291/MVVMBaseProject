@@ -47,6 +47,7 @@ class ServiceApi: iServiceApi {
     }
 
     override fun <S> createServiceToken(serviceClass: Class<S>): S {
+        httpClient.interceptors().clear()
         httpClient.apply {
             readTimeout(3, TimeUnit.MINUTES)
             connectTimeout(3, TimeUnit.MINUTES)
