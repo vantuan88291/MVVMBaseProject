@@ -16,8 +16,8 @@ class SharedPrefs private constructor() {
     fun <T> get(key: String, anonymousClass: Class<T>): Observable<T> {
         return Observable.create { emitter ->
             val sharedPreferencesListener =
-                SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-                    if (key == key) {
+                SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, keyShare ->
+                    if (key == keyShare) {
                         emitter.onNext(getTypeKey(key, anonymousClass, sharedPreferences))
                     }
                 }
